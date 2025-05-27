@@ -3,31 +3,10 @@
     <div class="header">
       <img src="@/assets/3333.svg" alt="fifftyfifty" class="fifty-img" stroke="black" stroke-width="2">
     </div>
-    <section class="hero-image" style="margin-bottom: 50px;">
-      <img src="../../assets/tofifty.png" class="hero-image1" alt="FIFTY FIFTY Members" style="border-radius: 20px;  width: 50%;" />
+    <section class="hero-image" style="margin-bottom: 30px;">
+      <img src="../../assets/tofifty.png" class="hero-image1" alt="FIFTY FIFTY Members" style="border-radius: 20px;  width: 60%;" />
     </section>
-    <div class="rank">
-      <h1 style="margin-bottom: 40px;">조회수 TOP 10 영상</h1>
-      <div class="slider-container">
-        <div class="slider-wrapper" ref="sliderRef">
-          <div class="slide-item" v-for="(video, index) in repeatedVideos" :key="index + '-' + video.videoId"
-            @click="goToVideo(video.videoUrl)" style="position: relative;">
-            <!-- 1~3등 랭크 표시 -->
-            <div v-if="video.rank && video.rank <= 3" class="rank-badge top-highlight">TOP {{ video.rank }}</div>
-            <div v-else-if="video.rank && video.rank <= 10" class="rank-badge top-regular">
-              TOP {{ video.rank }}
-            </div>
-
-            <img :src="video.thumbnailUrl" :alt="video.title" class="thumbnail" />
-            <div class="info">
-              <p class="title" style="color: black; font-size: 20px;">{{ video.title }}</p>
-              <p class="views" style="color: black; font-size: 15px;">{{ formatViews(video.viewCount) }} views</p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="community">
+         <div class="community">
       <a href="https://www.youtube.com/@WE_FIFTYFIFTY" target="_blank">
         <img src="@/assets/yb.png" alt="YouTube" class="social-icon" />
         <p>FIFTY FIFTY YOUTUBE</p>
@@ -45,7 +24,7 @@
         <p>FIFTY FIFTY WEVERSE</p>
       </a>
     </div>
-    <h1>일정표</h1>
+       <h1>일정표</h1>
     <div class="calendar-wrapper">
       <div class="calendar-content">
         <!-- 배경 이미지 -->
@@ -65,13 +44,9 @@
             <button @click="isModalOpen = false" class="close-btn">닫기</button>
           </div>
         </div>
-
       </div>
     </div>
-    <hr class="section-divider" />
-    
     <div class="notice">
-      <h1>공지사항</h1>
       <div class="notice-card">
         <ul class="notice-list">
 
@@ -94,7 +69,28 @@
         </div>
       </div>
     </div>
-    
+    <hr class="section-divider" />
+         <div class="rank">
+      <h1 style="margin-bottom: 40px;">조회수 TOP 10 영상</h1>
+      <div class="slider-container">
+        <div class="slider-wrapper" ref="sliderRef">
+          <div class="slide-item" v-for="(video, index) in repeatedVideos" :key="index + '-' + video.videoId"
+            @click="goToVideo(video.videoUrl)" style="position: relative;">
+            <!-- 1~3등 랭크 표시 -->
+            <div v-if="video.rank && video.rank <= 3" class="rank-badge top-highlight">TOP {{ video.rank }}</div>
+            <div v-else-if="video.rank && video.rank <= 10" class="rank-badge top-regular">
+              TOP {{ video.rank }}
+            </div>
+
+            <img :src="video.thumbnailUrl" :alt="video.title" class="thumbnail" />
+            <div class="info">
+              <p class="title" style="color: black; font-size: 20px;">{{ video.title }}</p>
+              <p class="views" style="color: black; font-size: 15px;">{{ formatViews(video.viewCount) }} views</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <hr class="section-divider" />
     <div class="profile" style="margin-top: 50px;">
       <div class="card-grid">
@@ -716,9 +712,9 @@ onMounted(async () => {
 }
 
 .fifty-img {
-  margin: 180px 0 0px 0px;
+  margin: 130px 0 0px 0px;
   position: relative;
-  width: 40%;
+  width: 50%;
   min-width: 600px;
   height: auto;
   z-index: 2;
@@ -726,7 +722,7 @@ onMounted(async () => {
 
 .hero-image1 {
    min-width: 600px;
-   margin: -40px 0 0 0;
+   margin: -50px 0 0 0;
   z-index: 1;
   position: relative;
 }
@@ -739,7 +735,6 @@ onMounted(async () => {
      background: linear-gradient(to bottom,#ffffff 0%, #fdd7ef 8%,  #f7e0ee 85%, #ffffff 100%);
   background-size: 100% auto;
   position: relative;
-  width: 100%;
   height: 100%;
    overflow-x: auto;
 }
