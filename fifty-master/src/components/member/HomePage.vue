@@ -1,11 +1,33 @@
 <template>
-  <div class="mainbody">
+  <div :class="['mainbody', { 'dark-mode': isDark }]">
+    <!-- 다크모드 토글 버튼 -->
+    <button @click="toggleTheme" class="theme-toggle">{{ isDark ? '☀️' : '🌙' }}</button>
+
+    <!-- 로고 -->
     <div class="header">
-      <img src="@/assets/3333.svg" alt="fifftyfifty" class="fifty-img" stroke="black" stroke-width="2">
+      <transition :name="isDark ? 'slide-dark' : 'slide-light'" mode="out-in">
+        <img
+          :key="isDark ? 'dark-logo' : 'light-logo'"
+          :src="isDark ? require('@/assets/test.png') : require('@/assets/3333.svg')"
+          alt="fiftyfifty"
+          class="fifty-img"
+        />
+      </transition>
     </div>
+
+    <!-- 메인 이미지 -->
     <section class="hero-image" style="margin-bottom: 30px;">
-      <img src="../../assets/tofifty.png" class="hero-image1" alt="FIFTY FIFTY Members" style="border-radius: 20px;  width: 60%;" />
+      <transition :name="isDark ? 'slide-dark' : 'slide-light'" mode="out-in">
+        <img
+          :key="isDark ? 'dark-hero' : 'light-hero'"
+          :src="isDark ? require('@/assets/darkmidnight.png') : require('../../assets/tofifty.png')"
+          class="hero-image1"
+          alt="FIFTY FIFTY Members"
+          style="border-radius: 20px; width: 60%;"
+        />
+      </transition>
     </section>
+
          <div class="community">
       <a href="https://www.youtube.com/@WE_FIFTYFIFTY" target="_blank">
         <img src="@/assets/yb.png" alt="YouTube" class="social-icon" />
@@ -47,11 +69,12 @@
       </div>
     </div>
     <div class="notice">
+      <h3 class="notice-title">📢 공지사항</h3>
       <div class="notice-card">
         <ul class="notice-list">
 
           <li v-for="(item, index) in notices" :key="index" @click="openPopup(item)" class="notice-item">
-            <span style="color: red; margin-right: 5px; font-weight: bold;">(공지)</span>{{ item.title }}
+            {{ item.title }}
           </li>
         </ul>
       </div>
@@ -71,7 +94,7 @@
     </div>
     <hr class="section-divider" />
          <div class="rank">
-      <h1 style="margin-bottom: 40px;">조회수 TOP 10 영상</h1>
+      <h1 style="margin-bottom: 10px;">조회수 TOP 10 영상</h1>
       <div class="slider-container">
         <div class="slider-wrapper" ref="sliderRef">
           <div class="slide-item" v-for="(video, index) in repeatedVideos" :key="index + '-' + video.videoId"
@@ -140,6 +163,7 @@
     <div class="modal-content">
       <img :src="selectedImage" alt="확대 이미지" class="modal-img" />
       <button class="modal-close" @click="closeModal">×</button>
+      
     </div>
   </div>
 </template>
@@ -164,6 +188,7 @@ const backgroundImage = ref('');
 // 공지사항 목록 (예시 데이터)
 const notices = ref([]);
 
+const isDark = ref(false);
 
 
 const isModalOpen = ref(false);
@@ -174,6 +199,9 @@ const selectedEvent = ref({
   description: ''
 });
 
+function toggleTheme() {
+    isDark.value = !isDark.value;
+}
 
 // 일정
 function formatDate(date: Date | null) {
@@ -208,12 +236,8 @@ function formatKoreanDateTime(dateString: string | null): string {
 
 async function fetchBackground(month: number) {
   try {
-    console.log("이거나옴?");
-    console.log(month);
     const response = await axiospr.backgroundList(month);
-    console.log(response.data);
     backgroundImage.value = response.data.imageUrl;
-    console.log(backgroundImage.value);
   } catch (error) {
     console.error(error);
   }
@@ -421,8 +445,6 @@ async function fetchPlan() {
     const response = await axiospr.ListPlan()
     calendarEvents.value = response.data || []
     colors.value = response.data.map(event => event.backgroundColor);
-    console.log(calendarEvents.value)
-    console.log(colors)
 
   } catch (error) {
     console.error('일정 목록을 불러오는 데 실패했습니다:', error)
@@ -600,6 +622,15 @@ onMounted(async () => {
   z-index: 0;
 }
 
+
+.notice-title {
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 16px;
+  color: #ff4d6d;
+}
+
 .notice {
   width: 100%;
   display: flex;
@@ -621,16 +652,18 @@ onMounted(async () => {
   text-align: center;
   /* 텍스트 중앙 정렬 */
   color: black;
-  font-size: 1.5em;
+  font-size: 20px;
   list-style: none;
-  margin-bottom: 20px;
 }
 
 .notice-item {
-  padding: 12px;
-  border-bottom: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  padding: 8px 15px;
+  margin-bottom: 5px;
   cursor: pointer;
   transition: background 0.2s;
+  border-radius: 8px;
 }
 
 .notice-item:hover {
@@ -639,11 +672,11 @@ onMounted(async () => {
 }
 
 .notice-card {
-  background: rgb(247, 238, 223);
+ background: rgba(255, 255, 255, 0.25);
   border: 1px solid #f8bbd0;
   padding-bottom: 10px;
   border-radius: 1rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
   width: 60%;
   margin-top: 20px;
 }
@@ -712,31 +745,98 @@ onMounted(async () => {
 }
 
 .fifty-img {
-  margin: 130px 0 0px 0px;
+  margin: 150px 0 0px 0px;
   position: relative;
   width: 50%;
   min-width: 600px;
   height: auto;
   z-index: 2;
+  
 }
 
 .hero-image1 {
-   min-width: 600px;
-   margin: -50px 0 0 0;
+  min-width: 600px;
+   max-width: 1200px;
+   max-height: 469.7px;
+   margin: -30px 0 0 0;
   z-index: 1;
   position: relative;
 }
 
 .mainbody {
   position: relative;
-  /* 콘텐츠 영역 위에 별을 배경으로 두기 위해 relative로 설정 */
   z-index: 10;
-  /* 별 배경보다 위에 표시 */
+  transition: background 1s ease-in-out;
      background: linear-gradient(to bottom,#ffffff 0%, #fdd7ef 8%,  #f7e0ee 85%, #ffffff 100%);
   background-size: 100% auto;
-  position: relative;
   height: 100%;
    overflow-x: auto;
+    &.dark-mode {
+    background-image: none;
+    background-color: #333;
+    z-index: 11;
+    height: 100%;
+    color: white;
+  }
+}
+
+.mainbody::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../../assets/darkback.png');
+  transform: translateX(-100%);
+  transition: transform 1s ease-in-out;
+  z-index: -1;
+}
+
+.mainbody.dark-mode::before {
+  transform: translateX(0);
+}
+/* 🌞 → 🌙 : 왼쪽에서 들어오기 */
+.slide-dark-enter-from {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+.slide-dark-enter-active {
+  transition: all 0.6s ease;
+}
+.slide-dark-leave-to {
+  opacity: 0;
+  transform: translateX(50px);
+}
+.slide-dark-leave-active {
+  transition: all 0.6s ease;
+}
+
+/* 🌙 → 🌞 : 오른쪽에서 들어오기 */
+.slide-light-enter-from {
+  opacity: 0;
+  transform: translateX(50px);
+}
+.slide-light-enter-active {
+  transition: all 0.6s ease;
+}
+.slide-light-leave-to {
+  opacity: 0;
+  transform: translateX(-50px);
+}
+.slide-light-leave-active {
+  transition: all 0.6s ease;
+}
+
+
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
 }
 
 .profile-box {
@@ -814,12 +914,8 @@ onMounted(async () => {
 }
 
 h1 {
-  color: #f48fb1;
-  text-shadow:
-    -1px -1px 0 #000,
-    1px -1px 0 #000,
-    -1px 1px 0 #000,
-    1px 1px 0 #000;
+   color: #ff4d6d;
+   font-size: 30px;
   letter-spacing: 1px;
 
 }
@@ -1257,4 +1353,7 @@ h1 {
   font-size: 14px;
   color: #666;
 }
+
+
+
 </style>
