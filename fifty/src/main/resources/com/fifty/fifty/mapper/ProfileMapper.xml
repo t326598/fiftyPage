@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.fifty.fifty.mapper.ProfileMapper">
+    <select id="list" resultType="Profile">
+        SELECT *
+        FROM Profile
+    </select>
+
+
+<!-- 파일은 파일쪽에서 프로필 파일 패스만 바꿔주면 되는거아님? -->
+    <update id="update">
+        UPDATE Profile
+        SET file_no = #{fileNo},
+            content = #{content},
+            title = #{title}
+        WHERE no = #{no}
+    </update>
+    
+</mapper>
