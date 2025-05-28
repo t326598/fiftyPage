@@ -52,7 +52,6 @@ public class NoticeController {
     @PostMapping()
     public ResponseEntity<?> create(@RequestBody Notice notice) {
         try {
-            System.out.println("나오나요?");
             int result = noticeServiceImpl.insert(notice);
             if(result > 0){
                 return new ResponseEntity<>("OK", HttpStatus.OK);

@@ -69,6 +69,7 @@ private String getCategoryColor(Long crt) {
     public ResponseEntity<?> create(@RequestBody Plan plan) {
         try {
             int result = planServiceImpl.insert(plan);
+            System.out.println("?" + result);
             if(result > 0){
                 return new ResponseEntity<>("OK", HttpStatus.OK);
             }

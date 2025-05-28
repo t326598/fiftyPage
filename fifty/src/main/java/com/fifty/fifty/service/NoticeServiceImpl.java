@@ -21,7 +21,6 @@ public class NoticeServiceImpl implements NoticeService {
     public List<Notice> list() throws Exception {
         List<Notice> noticeList = noticeMapper.list();
         return noticeList;
-        
     }
 
     @Override

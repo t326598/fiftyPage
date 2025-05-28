@@ -29,7 +29,6 @@ public class YoutubeChartController {
     public ResponseEntity<?> getTodayChart() {
         try {
             List<YoutubeChartData> musicList = chartService.getTodayChart();
-            System.out.println(musicList);
             return new ResponseEntity<>(musicList, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
