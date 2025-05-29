@@ -8,24 +8,135 @@ import NoticeList from "@/components/admin/noticeList.vue";
 import ProfileList from "@/components/admin/profileList.vue";
 import HomePage from "@/components/member/HomePage.vue";
 import MemberDetail from "@/components/MemberDetail.vue";
-import { createRouter, createWebHistory } from "vue-router";
+import LoginView from "@/components/views/LoginView.vue";
+import RegisterView from "@/components/views/RegisterView.vue";
 
-const routes = [
-    { path: '/', name: 'HomePage', component:HomePage},
-    { path: '/member', name: 'MemberDetail', component: MemberDetail },
-    {path: '/admin', name:'insertFiles', component: InsertFiles},
-    {path: '/admin/notice', name:'insertNotice', component:InsertNotice},
-    {path: '/admin/plan', name:'insertPlan', component:InsertPlan},
-    {path: '/admin/header', name:'adminHeader', component:AdminHeader},
-    {path: '/admin/noticeList', name:'noticeList', component:NoticeList},
-    {path: '/admin/profileList', name:'profileList', component:ProfileList},
-    {path: '/admin/calendarList', name:'calenderList', component:CalenderList},
-    {path: '/admin/imageList', name:'imageList', component:ImageList},
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { useAuth } from '@/composables/useAuth';
+
+interface Meta {
+  requiresAuth?: boolean;
+  roles?: string[];
+}
+
+const adminMeta: Meta = {
+  requiresAuth: true,
+  roles: ['ROLE_ADMIN']
+}
+
+const routes: RouteRecordRaw[] = [
+  { path: '/', name: 'HomePage', component: HomePage },
+  { path: '/member', name: 'MemberDetail', component: MemberDetail },
+  { path: '/login', component: LoginView },
+  { path: '/register', component: RegisterView },
+
+  // admin routes
+  {
+    path: '/admin',
+    name: 'insertFiles',
+    component: InsertFiles,
+    meta: {
+      requiresAuth: true,
+      roles: ['ROLE_ADMIN']
+    }
+  },
+  {
+    path: '/admin/notice',
+    name: 'insertNotice',
+    component: InsertNotice,
+    meta: {
+      requiresAuth: true,
+      roles: ['ROLE_ADMIN']
+    }
+  },
+  {
+    path: '/admin/plan',
+    name: 'insertPlan',
+    component: InsertPlan,
+    meta: {
+      requiresAuth: true,
+      roles: ['ROLE_ADMIN']
+    }
+  },
+  {
+    path: '/admin/noticeList',
+    name: 'noticeList',
+    component: NoticeList,
+    meta: {
+        roles: ['ROLE_ADMIN']
+    }
+  },
+  {
+    path: '/admin/profileList',
+    name: 'profileList',
+    component: ProfileList,
+    meta: {
+      requiresAuth: true,
+      roles: ['ROLE_ADMIN']
+    }
+  },
+  {
+    path: '/admin/calendarList',
+    name: 'calendarList',
+    component: CalenderList,
+    meta: {
+      requiresAuth: true,
+      roles: ['ROLE_ADMIN']
+    }
+  },
+  {
+    path: '/admin/imageList',
+    name: 'imageList',
+    component: ImageList,
+    meta: {
+      requiresAuth: true,
+      roles: ['ROLE_ADMIN']
+    }
+  },
 ]
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes
-  })
-  
-  export default router  
+  history: createWebHistory(),
+  routes
+})
+
+router.beforeEach(async (to, from, next) => {
+  const { isLogin, fetchUserInfo, hasRole, userInfo } = useAuth()
+  const token = localStorage.getItem('jwt')
+
+  // 로그인 상태가 아니지만 토큰이 있는 경우: 사용자 정보 불러오기
+  if (!isLogin.value && token) {
+    try {
+      await fetchUserInfo()
+    } catch (e) {
+      console.error('사용자 정보 가져오기 실패', e)
+      localStorage.removeItem('jwt')
+      return next('/login')
+    }
+  }
+
+  const meta = to.meta as Meta
+
+  // 인증이 필요한 페이지인데 로그인 안 되어 있으면
+  if (meta.requiresAuth && !isLogin.value) {
+    return next('/login')
+  }
+
+  // 권한이 필요한 페이지인데 권한 없으면
+  if (meta.roles) {
+    // authList가 아직 없으면 막기 (에러 방지)
+    if (!userInfo.value?.authList) {
+      return next('/login') // 또는 로딩 대기 페이지로 보내도 됨
+    }
+
+    if (!meta.roles.some(role => hasRole(role))) {
+      alert('접근 권한이 없습니다')
+      return next('/')
+    }
+  }
+
+  next()
+})
+
+
+export default router

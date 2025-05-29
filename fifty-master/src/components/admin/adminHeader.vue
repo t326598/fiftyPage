@@ -13,12 +13,36 @@
   </div>
 </template>
 
-<script setup lang="ts">
+<script setup lang="ts">import { useRouter } from 'vue-router'
+import { useAuth } from '@/composables/useAuth'
+import Swal from 'sweetalert2'
 
+const router = useRouter()
+const { isLogin, userInfo } = useAuth()
 
-const handleLogout = () => {
-  console.log('로그아웃 실행됨')
-  // 실제 로그아웃 로직 (예: 토큰 삭제 후 라우터 이동 등)
+const handleLogout = async () => {
+  const result = await Swal.fire({
+    title: '로그아웃 하시겠습니까?',
+    text: '확인 시 로그인 페이지로 이동합니다.',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonText: '로그아웃',
+    cancelButtonText: '취소',
+    reverseButtons: true
+  })
+
+  if (result.isConfirmed) {
+    // 1. JWT 삭제
+    localStorage.removeItem('jwt')
+
+    // 2. 상태 초기화
+    isLogin.value = false
+    userInfo.value = null
+
+    // 3. 페이지 이동
+    await Swal.fire('로그아웃 완료', '', 'success')
+    router.push('/login')
+  }
 }
 
 </script>
