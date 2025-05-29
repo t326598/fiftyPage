@@ -9,18 +9,18 @@
 
           <div class="contentArea">
             <div class="mainTitle d-flex items-center">
-              <h1>멤버 프로필 관리</h1>
+              <h1>달력 백그라운드 관리</h1>
             </div>
 
             <div class="profileRow d-flex justify-between">
               <div
-                v-for="profile in memberList"
-                :key="profile.no"
+                v-for="months in calendarList"
+                :key="months.id"
                 class="profileCard text-center"
               >
-              <img :src="`http://localhost:8080/upload/${profile.filePath}`" :alt="profile.name" class="member-img" />
-                <h5 class="mt-2">{{ profile.title }}</h5>
-                <button class="updateBtn mt-1" @click="editProfile(profile.no)">수정</button>
+              <img :src="`http://localhost:8080/upload/${months.imageUrl}`" :alt="months.month" class="member-img" />
+                <h5 class="mt-2">{{ months.month }} 월</h5>
+                <button class="updateBtn mt-1" @click="editCalendar(months.id)">수정</button>
               </div>
             </div>
           </div>
@@ -28,6 +28,14 @@
       </div>
     </div>
   </div>
+    <EditMothsModal
+  v-if="showModal"
+  :months="selectedCalendar"
+  @close="closeModal"
+  @updated="fetchCalendarList"
+/>
+
+
 </template>
 
 
@@ -36,22 +44,39 @@ import Sidebar from '../admin/adminSidebar.vue'
 import Header from '../admin/adminHeader.vue'
 import axios from "@/axios/profile";
 import { ref, onMounted} from 'vue'
+import EditMothsModal from '@/components/admin/updateCalendarModal.vue'
 
-const memberList = ref([]);
+const calendarList = ref([]);
+const selectedCalendar = ref(null)
+const showModal = ref(false)
 
-const fetchMemberList = async () => {
+const fetchCalendarList = async () => {
   try {
-    const res = await axios.ListProfile()
-    memberList.value = res.data.list
-    console.log(memberList.value)
+  
+    const res = await axios.ListCalendar()
+    calendarList.value = res.data
+    console.log(calendarList.value)
   } catch (err) {
     console.error(err)
   }
 }
 
 
+const editCalendar = (calendarId: number) => {
+  const calendar = calendarList.value.find(c => c.id === calendarId)
+  if (calendar) {
+    selectedCalendar.value = { ...calendar }
+    showModal.value = true
+  }
+}
+
+const closeModal = () => {
+  showModal.value = false
+  selectedCalendar.value = null
+}
+
 onMounted(() => {
-   fetchMemberList()
+   fetchCalendarList()
 })
 
 </script>
@@ -87,23 +112,22 @@ onMounted(() => {
   display: flex;
   align-items: center;
 
-}.profileRow {
+}
+.profileRow {
   display: flex;
-  flex-wrap: nowrap;
-  gap: 60px;
-  overflow-x: auto;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: flex-start; /* 또는 space-between */
   padding: 10px 0;
 }
 
 .profileCard {
-  min-width: 160px;
-  max-width: 180px;
+  width: calc(20% - 30px); /* 4개씩 한 줄에 */
   padding: 8px;
   background-color: #f8f9fa;
   border: 1px solid #dee2e6;
   border-radius: 6px;
   box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.08);
-  flex-shrink: 0;
 }
 
 .member-img {

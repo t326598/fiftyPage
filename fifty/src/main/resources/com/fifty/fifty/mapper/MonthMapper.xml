@@ -5,8 +5,18 @@
 
 <mapper namespace="com.fifty.fifty.mapper.MonthMapper">
 
+<select id="calendarList" resultType="Months">
+    SELECT *
+    FROM monthly_background
+</select>
 
   <select id="getBackgroundByMonth" resultType="Months">
     SELECT * FROM monthly_background WHERE month = #{month}
   </select>
+
+  <update id="monthsUpdate">
+    UPDATE monthly_background
+    SET image_url = #{imageUrl}
+    WHERE id = #{id}
+  </update>
 </mapper>

@@ -28,8 +28,14 @@ function fetchFiles(params: FileParams) {
   return instance.get("/files",{params})
 }
 
+function deleteImage(no : number) {
+    return instance.delete(`/files/${no}`);
+  
+}
+
 
 export default{
   insertFile,
-  fetchFiles
+  fetchFiles,
+  deleteImage
 };

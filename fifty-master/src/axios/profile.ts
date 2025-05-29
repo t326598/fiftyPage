@@ -19,6 +19,10 @@ function ListPlan(){
   return instance.get("/plan");
 }
 
+function ListCalendar(){
+  return instance.get("/months/list");
+}
+
 
 // 공지사항
 
@@ -28,6 +32,10 @@ function ListNotice() {
 
 function backgroundList(month: number) {
   return instance.get("/months", { params: { month } });
+}
+
+function updateBackground(data : any){
+    return instance.put("/months", data);
 }
 
 function MusicChart(){
@@ -41,5 +49,7 @@ export default{
   backgroundList,
   MusicChart,
   UpdateProfile,
-  UpdateImage
+  UpdateImage,
+  ListCalendar,
+  updateBackground
 };

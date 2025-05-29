@@ -26,8 +26,7 @@ function getUpdatePlan(data:any) {
     return instance.put("/plan", data)
 }
 function getDeletePlan(no:number) {
-    return instance.delete(`/plan/${no}`)
-    
+    return instance.delete(`/plan/${no}`)  
 }
 
 export default{

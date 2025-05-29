@@ -17,7 +17,7 @@
           <li @mouseover="handleMouseOver" @mouseout="handleMouseOut">
             <h3>이미지 관리</h3>
             <ul class="sub-menu">
-              <li><RouterLink to="/admin/images">이미지 목록</RouterLink></li>
+              <li><RouterLink to="/admin/imageList">이미지 목록</RouterLink></li>
             </ul>
           </li>
           <li @mouseover="handleMouseOver" @mouseout="handleMouseOut">
@@ -35,13 +35,13 @@
           <li @mouseover="handleMouseOver" @mouseout="handleMouseOut">
             <h3>프로필 관리</h3>
             <ul class="sub-menu">
-              <li><RouterLink to="/admin/profile">프로필 설정</RouterLink></li>
+              <li><RouterLink to="/admin/profileList">프로필 설정</RouterLink></li>
             </ul>
           </li>
           <li @mouseover="handleMouseOver" @mouseout="handleMouseOut">
             <h3>달력 관리</h3>
             <ul class="sub-menu">
-              <li><RouterLink to="/admin/calendar">달력 보기</RouterLink></li>
+              <li><RouterLink to="/admin/calendarList">달력 보기</RouterLink></li>
             </ul>
           </li>
         </ul>

@@ -1,4 +1,6 @@
 import AdminHeader from "@/components/admin/adminHeader.vue";
+import CalenderList from "@/components/admin/calenderList.vue";
+import ImageList from "@/components/admin/imageList.vue";
 import InsertFiles from "@/components/admin/insertFiles.vue";
 import InsertNotice from "@/components/admin/insertNotice.vue";
 import InsertPlan from "@/components/admin/insertPlan.vue";
@@ -17,6 +19,8 @@ const routes = [
     {path: '/admin/header', name:'adminHeader', component:AdminHeader},
     {path: '/admin/noticeList', name:'noticeList', component:NoticeList},
     {path: '/admin/profileList', name:'profileList', component:ProfileList},
+    {path: '/admin/calendarList', name:'calenderList', component:CalenderList},
+    {path: '/admin/imageList', name:'imageList', component:ImageList},
 ]
 
 const router = createRouter({

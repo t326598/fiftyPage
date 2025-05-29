@@ -1,22 +1,7 @@
 <template>
   <div class="modal-overlay" @click.self="close">
     <div class="modal-content">
-      <h2>프로필 수정</h2>
-
-      <div class="form-group">
-        <label>타이틀</label>
-        <input v-model="form.title" />
-      </div>
-
-      <div class="form-group">
-        <label>서브 타이틀</label>
-        <input v-model="form.subContent" />
-      </div>
-
-      <div class="form-group">
-        <label>콘텐츠</label>
-        <textarea v-model="form.content"></textarea>
-      </div>
+      <h2>일정 백그라운드</h2>
 
       <div class="form-group">
         <label>이미지</label>
@@ -37,21 +22,20 @@ import { ref } from 'vue'
 import axios from "@/axios/profile"
 
 const props = defineProps<{
-  profile: any
+  months: any
 }>()
 
 const emit = defineEmits(['close', 'updated'])
 
 const form = ref({
-  no: props.profile.no,
-  title: props.profile.title,
-  subContent: props.profile.subContent,
-  content: props.profile.content,
-  file: null as File | null,       // 선택한 새 이미지 파일
-  filePath: props.profile.filePath // 기존 이미지 경로 (서버 저장된 파일명 등)
+  id: props.months.id,
+  month: props.months.month,
+  imageUrl: props.months.imageUrl,
+  file: null as File | null,
+  filePath: props.months.filePath
 })
 
-const previewUrl = ref<string | null>(`http://localhost:8080/upload/${props.profile.filePath}`)
+const previewUrl = ref<string | null>(`http://localhost:8080/upload/${props.months.imageUrl}`)
 
 const onImageChange = (e: Event) => {
   const file = (e.target as HTMLInputElement).files?.[0]
@@ -64,33 +48,27 @@ const onImageChange = (e: Event) => {
 const uploadFile = async (file: File): Promise<string> => {
   const formData = new FormData()
   formData.append('file', file)
-  const response = await axios.UpdateImage( formData, {
+  const response = await axios.UpdateImage(formData, {
     headers: { 'Content-Type': 'multipart/form-data' }
   })
-  console.log(response.data)
-
-
   return response.data.filePath
 }
 
 const submit = async () => {
   try {
-    console.log("나오나요?")
     let newFilePath = form.value.filePath
     if (form.value.file) {
       newFilePath = await uploadFile(form.value.file)
+      console.log(newFilePath);
     }
-    // 프로필 수정 API 호출, 기존 파일 경로도 보내서 서버가 이전 파일 삭제 가능하게
-    const res = await axios.UpdateProfile({
-      no: form.value.no,
-      title: form.value.title,
-      subContent: form.value.subContent,
-      content: form.value.content,
-      filePath: newFilePath,
-      oldFilePath: form.value.filePath  
+
+    console.log("나옴?")
+    const res = await axios.updateBackground({
+      id : form.value.id,
+      imageUrl: newFilePath,
+      oldFilePath: form.value.filePath
     })
 
-    console.log(res)
     emit('updated')
     emit('close')
   } catch (err) {
@@ -99,6 +77,7 @@ const submit = async () => {
 }
 
 const close = () => emit('close')
+
 </script>
 
 <style scoped>
