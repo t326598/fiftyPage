@@ -20,7 +20,6 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     public List<Plan> list() throws Exception {
-        log.info("리스트나오나요??");
         List<Plan> planList = planMapper.list();
         return planList;
     }
@@ -33,7 +32,7 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     public int update(Plan plan) throws Exception {
-           int result = planMapper.update(plan);
+        int result = planMapper.update(plan);
        return result;
     }
 

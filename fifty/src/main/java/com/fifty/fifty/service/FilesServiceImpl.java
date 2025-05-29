@@ -56,15 +56,12 @@ public class FilesServiceImpl implements FilesService {
     file.setName(fileName);
     file.setPath(filePath);
     file.setSize(fileSize);
-
-    System.out.println(file);
     try {
     result = filesMapper.insert(file);
     } catch (Exception e) {
         e.printStackTrace(); // 반드시 직접 호출
         throw e;
     }
-    System.out.println(result);
     return result;
 
 }

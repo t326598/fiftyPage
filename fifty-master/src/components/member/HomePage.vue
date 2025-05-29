@@ -54,7 +54,7 @@
           :style="{ backgroundImage: `url('http://localhost:8080/upload/${backgroundImage}')` }"></div>
 
         <!-- 캘린더 -->
-
+        <CalendarLegend />
         <FullCalendar :options="calendarOptions" />
         <!-- 모달 -->
         <div v-if="isModalOpen" class="modal-overlay" @click.self="isModalOpen = false">
@@ -180,6 +180,7 @@ import axiosCt from '../../axios/chart';
 import { useRoute, useRouter } from 'vue-router'
 import koLocale from '@fullcalendar/core/locales/ko';
 import listPlugin from '@fullcalendar/list';
+import CalendarLegend from '../sub/CalendarLegend.vue'
 
 
 const backgroundImage = ref('');
@@ -475,7 +476,6 @@ const calendarOptions = reactive({
   datesSet: (info: any) => {
     const currentStartDate = new Date(info.view.currentStart);
     const month = currentStartDate.getMonth() + 1;
-    console.log("현재 월:", month);
     fetchBackground(month);
   },
 
@@ -586,7 +586,14 @@ onMounted(async () => {
   color: #333;
 }
 
-
+.calendar-legend {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  width: 100%;
+}
 
 .calendar-wrapper {
   display: flex;

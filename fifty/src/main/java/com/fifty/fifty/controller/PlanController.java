@@ -34,12 +34,13 @@ public class PlanController {
         @GetMapping
         public ResponseEntity<?> getAll() {
             try {
-                log.info("이거나오나요??" );
                 List<Plan> planList = planServiceImpl.list();
                 
                 // FullCalendar에 맞게 가공
                 List<Map<String, Object>> eventList = planList.stream().map(plan -> {
                     Map<String, Object> map = new HashMap<>();
+                    map.put("no", plan.getNo());
+                    map.put("crt", plan.getCrt());
                     map.put("title", plan.getTitle());
                     map.put("start", plan.getStartAt().toString());
                     map.put("end", plan.getEndAt() != null ? plan.getEndAt().toString() : null);
@@ -47,7 +48,6 @@ public class PlanController {
                     return map;
                 }).collect(Collectors.toList());
                 
-                log.info("나오시나요?" + eventList);
                 return new ResponseEntity<>(eventList, HttpStatus.OK);
 
             } catch (Exception e) {
@@ -55,21 +55,34 @@ public class PlanController {
             }
         }
 
-// 카테고리 색상 매핑
+     
+       
+       
 private String getCategoryColor(Long crt) {
-    if (crt == null) return "#adb5bd";
+    if (crt == null) return "#adb5bd"; // 기본 회색
 
-    if (crt == 1L) return "#ff6b6b";       // concert
-    else if (crt == 2L) return "#4dabf7";  // fanmeeting
-    else if (crt == 3L) return "#51cf66";  // promotion
-    else return "#adb5bd";                // default
+    switch (crt.intValue()) {
+        case 1: // 음방 (핑크)
+            return "#ff6b81"; 
+        case 2: // 자컨 (하늘)
+            return "#4dabf7"; 
+        case 3: // 방송 (연두)
+            return "#51cf66";
+        case 4: // 공연 (노랑)
+            return "#f4a261"; 
+        case 5: // 팬미팅 (주황)
+            return "#ff7f50"; 
+        case 6: // 곡발매 (보라)
+            return "#8e44ad";
+        default:
+            return "#adb5bd";
+    }
 }
     
     @PostMapping()
     public ResponseEntity<?> create(@RequestBody Plan plan) {
         try {
             int result = planServiceImpl.insert(plan);
-            System.out.println("?" + result);
             if(result > 0){
                 return new ResponseEntity<>("OK", HttpStatus.OK);
             }

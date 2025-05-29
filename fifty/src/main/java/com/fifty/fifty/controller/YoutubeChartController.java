@@ -41,12 +41,10 @@ public class YoutubeChartController {
             // 1. 유튜브 영상 리스트 받아오기
             List<YoutubeChartData> videos = chartService.fetchTop10YoutubeVideos();
 
-            System.out.println("=== 유튜브 인기 영상 리스트 ===");
             for (YoutubeChartData video : videos) {
                 System.out.printf("제목: %s, 조회수: %d, URL: %s%n",
                     video.getTitle(), video.getViewCount(), video.getVideoUrl());
             }
-            System.out.println("=== 리스트 출력 완료 ===");
 
             // 3. DB 업데이트 실행
             chartService.updateYoutubeChart();

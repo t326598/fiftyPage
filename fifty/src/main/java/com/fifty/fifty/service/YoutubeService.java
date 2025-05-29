@@ -31,7 +31,6 @@ public class YoutubeService {
 
 
     public List<YoutubeChartData> getTodayChart() {
-        System.out.println("나옴?");
         return youtubeMapper.getTodayChart();
     }
 

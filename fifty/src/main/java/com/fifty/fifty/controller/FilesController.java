@@ -65,12 +65,10 @@ public class FilesController {
     @PostMapping("")
     public ResponseEntity<?> create(@ModelAttribute Files file) {
         try {
-            System.out.println("crt = " + file.getCrt());
-            System.out.println("trueDay = " + file.getTrueDay());
-            System.out.println("파일 이름 = " + (file.getData() != null ? file.getData().getOriginalFilename() : "없음"));
+     
 
             int result = filesService.insert(file);
-            System.out.println("이거는나옴?"+result);
+    
             if(result > 0){
                 return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
             }

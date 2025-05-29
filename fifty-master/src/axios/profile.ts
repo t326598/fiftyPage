@@ -7,6 +7,13 @@ const instance = axios.create({
 function ListProfile(){
     return instance.get("/profile");
 }
+function UpdateProfile(data : any){
+    return instance.put("/profile", data);
+}
+
+function UpdateImage(data: FormData, config = {}) {
+  return instance.post("/profile", data, config)
+}
 
 function ListPlan(){
   return instance.get("/plan");
@@ -32,5 +39,7 @@ export default{
   ListPlan,
   ListNotice,
   backgroundList,
-  MusicChart
+  MusicChart,
+  UpdateProfile,
+  UpdateImage
 };
