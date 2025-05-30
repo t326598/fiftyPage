@@ -14,7 +14,8 @@
 
 <script setup>
 import { ref } from 'vue'
-import axios  from '../../axios/notice'
+import axios  from '../../api/notice'
+import Swal from 'sweetalert2'
 
 const form = ref({
   title: '',
@@ -29,6 +30,13 @@ const submit = async () => {
       content: form.value.content
     })
     console.log('성공:', res.data)
+     await Swal.fire({
+      icon: 'success',
+      title: '등록 성공',
+      text: '공지사항이 성공적으로 등록되었습니다!',
+      confirmButtonText: '확인',
+    })
+      window.close()
   } catch (err) {
     console.error('에러 발생:', err)
   }

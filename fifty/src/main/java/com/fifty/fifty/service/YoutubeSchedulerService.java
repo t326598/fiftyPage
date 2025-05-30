@@ -16,8 +16,7 @@ public class YoutubeSchedulerService {
 
     @Autowired
     private YoutubeService chartService;
-    @Autowired
-    private YoutubeChartMapper chartMapper;
+
 
 @Scheduled(cron = "0 0 9 * * *") // 매일 오전 9시
 public void scheduledYoutubeUpdate() throws IOException, InterruptedException {

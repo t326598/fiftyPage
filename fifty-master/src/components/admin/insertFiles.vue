@@ -40,7 +40,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import axios  from '../../axios/files'
+import axios  from '../../api/files'
 
 const form = ref({
   crt: '',

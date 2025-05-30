@@ -21,7 +21,7 @@
 <!--  일정 등록 -->
     <insert id="insert">
       INSERT INTO plan (file_no, crt, title, content, start_at, end_at, created_at)
-      VALUES (#{fileNo}, #{crt}, #{title}, #{content}, #{startAt}, #{endAt}, #{createdAt})
+      VALUES (#{fileNo}, #{crt}, #{title}, #{content}, #{startAt}, #{endAt}, now())
     </insert>
 
 <!-- 일정 업데이트 -->
@@ -30,7 +30,9 @@
       SET file_no = #{fileNo},
           title = #{title},
           content = #{content},
-          day_at = #{dayAt},
+          crt = #{crt},
+          start_at = #{startAt},
+          end_at = #{endAt},
           updated_at = now()
       WHERE no = #{no}
     </update>

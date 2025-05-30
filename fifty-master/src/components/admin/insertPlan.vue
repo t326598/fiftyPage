@@ -1,15 +1,9 @@
 <template>
   <div>
-    <FullCalendar :options="calendarOptions" />
-
-    <hr />
-
-    <h3>현재 추가된 일정 목록</h3>
-    <ul>
-      <li v-for="(event, index) in calendarEvents" :key="index">
-        [{{ categories[event.category] || '기타' }}] {{ event.title }} - {{ event.start }} ~ {{ event.end ?? '-' }}
-      </li>
-    </ul>
+      <Header />
+            <div class="container">
+              <Sidebar/>
+      <FullCalendar :options="calendarOptions" class="fullcalendars" />
 
     <!-- 모달 -->
     <div v-if="isModalOpen" class="modal-overlay" @click.self="closeModal">
@@ -18,16 +12,18 @@
 
         <!-- 카테고리 탭 -->
         <div class="category-tabs">
-          <button
-            v-for="(name, num) in categories"
-            :key="num"
-            type="button"
-            :class="{ active: form.category === num }"
-            @click="form.category = num"
-          >
-            {{ num }}번 {{ name }}
-          </button>
-        </div>
+        <button
+          v-for="(name, num) in categories"
+          :key="num"
+          type="button"
+          :class="{ active: form.crt === Number(num) }"
+          @click="form.crt = Number(num)"
+        >
+          {{ name }}
+          
+        </button>
+      </div>
+      
 
         <form @submit.prevent="submitEvent">
           <div>
@@ -66,22 +62,29 @@
       </div>
     </div>
   </div>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { ref, reactive } from 'vue'
+import { ref, reactive, onMounted,computed } from 'vue'
 import FullCalendar from '@fullcalendar/vue3'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import listPlugin from '@fullcalendar/list'
 import koLocale from '@fullcalendar/core/locales/ko'
+import Header from '@/components/admin/adminHeader.vue'
+import Sidebar from '@/components/admin/adminSidebar.vue'
+import axios from '@/api/plan'
+import Swal from 'sweetalert2'
 
 interface CalendarEvent {
+  no: number 
   title: string
+  content: string
   start: string
   end?: string
-  category: number
+  crt: number
 }
 
 // 카테고리 매핑
@@ -95,21 +98,22 @@ const categories: Record<number, string> = {
 }
 
 const calendarEvents = ref<CalendarEvent[]>([])
-
+const colors = ref([]);
 const isModalOpen = ref(false)
 const selectedDate = ref('')
 const selectedEventIndex = ref<number | null>(null)
 
 const form = reactive({
+  no: 1,
   title: '',
   startTime: '09:00',
   endTime: '10:00',
-  category: 1,
+  crt: 1,
 })
 
 const times = []
 for (let h = 0; h < 24; h++) {
-  for (let m = 0; m < 60; m += 30) {
+  for (let m = 0; m < 60; m += 10) {
     const hh = h.toString().padStart(2, '0')
     const mm = m.toString().padStart(2, '0')
     times.push(`${hh}:${mm}`)
@@ -134,7 +138,7 @@ const calendarOptions = reactive({
     day: '일간',
     list: '리스트',
   },
-  events: calendarEvents.value,
+  events: computed(() => calendarEvents.value),
   eventDidMount(info: any) {
     info.el.style.position = 'relative'
     info.el.style.zIndex = '10'
@@ -167,13 +171,12 @@ const calendarOptions = reactive({
     // 클릭한 이벤트 인덱스 찾기
     const clickedEvent = info.event
     const idx = calendarEvents.value.findIndex(ev => 
-      ev.title === clickedEvent.title &&
-      ev.start === clickedEvent.start?.toISOString() &&
-      ev.end === (clickedEvent.end ? clickedEvent.end.toISOString() : undefined)
+      ev.title === clickedEvent.title
     )
     if (idx !== -1) {
       openModalForEdit(idx)
     } else {
+      
       alert('이벤트를 찾을 수 없습니다.')
     }
   },
@@ -184,11 +187,27 @@ const calendarOptions = reactive({
   },
 })
 
+
+
+
+async function fetchPlan() {
+  try {
+    const response = await axios.ListPlan()
+    calendarEvents.value = response.data || []
+    colors.value = response.data.map(event => event.backgroundColor);
+    console.log(response.data)
+
+  } catch (error) {
+    console.error('일정 목록을 불러오는 데 실패했습니다:', error)
+  }
+}
+
 function openModal() {
+  form.no = 1
   form.title = ''
   form.startTime = '09:00'
   form.endTime = '10:00'
-  form.category = 1
+  form.crt = 1
   isModalOpen.value = true
 }
 
@@ -196,11 +215,13 @@ function openModalForEdit(index: number) {
   const ev = calendarEvents.value[index]
   selectedEventIndex.value = index
   selectedDate.value = ev.start.slice(0, 10)
+   form.no = ev.no 
   form.title = ev.title
   form.startTime = ev.start.slice(11, 16)
   form.endTime = ev.end ? ev.end.slice(11, 16) : '10:00'
-  form.category = ev.category
+  form.crt = ev.crt
   isModalOpen.value = true
+  console.log('form.category:', form.crt, typeof form.crt)
 }
 
 function closeModal() {
@@ -208,32 +229,86 @@ function closeModal() {
   selectedEventIndex.value = null
 }
 
-function submitEvent() {
+async function submitEvent() {
   const newEvent = {
+    no: form.no,
     title: form.title,
-    start: `${selectedDate.value}T${form.startTime}`,
-    end: `${selectedDate.value}T${form.endTime}`,
-    category: form.category,
+    startAt: `${selectedDate.value}T${form.startTime}`,
+    endAt: `${selectedDate.value}T${form.endTime}`,
+    crt: form.crt,
   }
-  if (selectedEventIndex.value !== null) {
-    // 수정
-    calendarEvents.value[selectedEventIndex.value] = newEvent
+    if (selectedEventIndex.value !== null) {
+      await axios.getUpdatePlan(newEvent)
+   
   } else {
-    // 새로 추가
-    calendarEvents.value.push(newEvent)
+   await axios.getInsertPlan(newEvent);
+
   }
+  await fetchPlan()
   closeModal()
+     await Swal.fire({
+        icon: 'success',
+        title: '완료',
+        text: '일정이 성공적으로 적용되었습니다.',
+        timer: 1500,
+        showConfirmButton: false,
+      })
 }
 
-function deleteEvent() {
+async function deleteEvent() {
   if (selectedEventIndex.value !== null) {
-    calendarEvents.value.splice(selectedEventIndex.value, 1)
-    closeModal()
+    const eventToDelete = calendarEvents.value[selectedEventIndex.value]
+
+    const confirmed = confirm(`일정 "${eventToDelete.title}"을(를) 삭제하시겠습니까?`)
+    if (!confirmed) return
+
+    try {
+      await axios.getDeletePlan(form.no)
+      await fetchPlan()
+      closeModal()
+        closeModal()
+        await Swal.fire({
+          icon: 'success',
+          title: '삭제 완료',
+          text: '일정이 성공적으로 삭제되었습니다.',
+          timer: 1500,
+          showConfirmButton: false,
+        })
+      } catch (error) {
+        console.error('일정 삭제 실패:', error)
+        await Swal.fire({
+          icon: 'error',
+          title: '삭제 실패',
+          text: '일정 삭제에 실패했습니다.',
+        })
+      }
+    } 
   }
-}
+
+onMounted(() => {
+  fetchPlan();
+});
+
 </script>
 
 <style scoped>
+.swal2-container {
+  position: fixed !important;
+  z-index: 2147483647 !important; /* 최대값 */
+}
+.container {
+  display: flex;
+}
+
+
+.fullcalendars{
+  margin: 0 0 200px 0;
+  margin-top: 50px;
+  min-width: 900px;
+  width: 60%;
+  height: 60%;
+}
+
 .modal-overlay {
   position: fixed;
   top: 0;

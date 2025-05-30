@@ -13,9 +13,10 @@
 <!-- 파일은 파일쪽에서 프로필 파일 패스만 바꿔주면 되는거아님? -->
     <update id="update">
         UPDATE Profile
-        SET file_no = #{fileNo},
-            content = #{content},
-            title = #{title}
+        SET content = #{content},
+            sub_content = #{subContent},
+            title = #{title},
+            file_path = #{filePath}
         WHERE no = #{no}
     </update>
     
