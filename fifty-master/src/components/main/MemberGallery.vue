@@ -54,9 +54,9 @@
 </template>
 <script setup lang="ts">
 import { ref, computed, watch, onMounted } from 'vue'
-import axios from '../../axios/files'
+import axios from '../../api/files'
 import { useRoute, useRouter } from 'vue-router'
-import axiospr from '../../axios/profile'
+import axiospr from '../../api/profile'
 
 const route = useRoute()
 const router = useRouter()
@@ -114,12 +114,11 @@ async function fetchMembers() {
     const response = await axios.fetchFiles({
       crt: crt.value,
       page: currentPage.value - 1,
-      rows: itemsPerPage,  // ← 'rows'로 전달
+      rows: itemsPerPage, 
     })
     console.log(response.data)
-    // 받아온 데이터 구조에 따라 처리
-    members.value = response.data.list || []       // 'list' 또는 'members' 키를 서버 응답에 맞게
-    totalItems.value = response.data.total || 0    // 'total' 키를 서버 응답에 맞게
+    members.value = response.data.list || []      
+    totalItems.value = response.data.total || 0   
     allImagesLoaded.value = true
   } catch (error) {
     console.error('멤버 목록을 불러오는 데 실패했습니다:', error)
@@ -182,4 +181,4 @@ onMounted(async () => {
 
 </script>
 
-<style scoped src="@/assets/mainpage.css"></style>
+<style scoped src="@/assets/style/mainpage.css"></style>

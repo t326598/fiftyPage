@@ -1,6 +1,6 @@
 <template>
   <div class="login-container">
-    <img src="@/assets/3333.svg" alt="FiftyFifty 로고" class="logo" />
+    <img src="@/assets/image/3333.svg" alt="FiftyFifty 로고" class="logo" />
 
     <h2>로그인</h2>
 

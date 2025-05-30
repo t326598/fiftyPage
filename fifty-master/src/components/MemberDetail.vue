@@ -20,7 +20,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, onBeforeUnmount, computed } from 'vue';
-import axios from '../axios/chart';
+import axios from '../api/chart';
 
 const videoitems = ref<any[]>([]);
 const currentOffset = ref(0);

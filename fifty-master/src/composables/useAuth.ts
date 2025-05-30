@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import authApi from '@/axios/auth'
+import authApi from '@/api/auth'
 
 const isLogin = ref(false)
 const userInfo = ref<any>(null)

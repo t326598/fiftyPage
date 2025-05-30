@@ -395,7 +395,7 @@ function scrollToTop() {
   top: 0; left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('../assets/darkback.png');
+  background-image: url('../assets/image/darkback.png');
   transform: translateX(-100%);
   transition: transform 1s ease-in-out;
   z-index: -1;

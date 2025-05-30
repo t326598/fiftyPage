@@ -9,7 +9,11 @@ function getYoutubeChart(){
     return instance.get("/api/chart/youtube/today");
 }
 
+function MusicChart(){
+  return instance.get("/chart/fifty-fifty")
+}
 
 export default{
-  getYoutubeChart
+  getYoutubeChart,
+  MusicChart
 };

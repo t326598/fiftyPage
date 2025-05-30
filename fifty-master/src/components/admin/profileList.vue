@@ -42,7 +42,7 @@
 <script setup lang="ts">
 import Sidebar from '../admin/adminSidebar.vue'
 import Header from '../admin/adminHeader.vue'
-import axios from "@/axios/profile";
+import axios from "@/api/profile";
 import { ref, onMounted} from 'vue'
 import EditProfileModal from '@/components/admin/UpdateProfileModal.vue'
 

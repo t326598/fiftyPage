@@ -1,6 +1,6 @@
 <template>
   <div class="register-container">
-    <img src="@/assets/3333.svg" alt="FiftyFifty 로고" class="logo" />
+    <img src="@/assets/image/3333.svg" alt="FiftyFifty 로고" class="logo" />
 
     <h2>회원가입</h2>
 
@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import axios from '@/axios/auth'
+import axios from '@/api/auth'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()

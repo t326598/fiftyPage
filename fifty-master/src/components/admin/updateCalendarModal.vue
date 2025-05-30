@@ -19,7 +19,8 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import axios from "@/axios/profile"
+import axios from "@/api/profile"
+import axiosplan from "@/api/plan"
 
 const props = defineProps<{
   months: any
@@ -63,7 +64,7 @@ const submit = async () => {
     }
 
     console.log("나옴?")
-    const res = await axios.updateBackground({
+    const res = await axiosplan.updateBackground({
       id : form.value.id,
       imageUrl: newFilePath,
       oldFilePath: form.value.filePath

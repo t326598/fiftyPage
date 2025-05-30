@@ -69,7 +69,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted,computed,watch } from 'vue'
-import axios from '@/axios/files'
+import axios from '@/api/files'
 import Header from '@/components/admin/adminHeader.vue'
 import Sidebar from '@/components/admin/adminSidebar.vue'
 import { useRoute, useRouter } from 'vue-router'

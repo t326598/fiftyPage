@@ -75,8 +75,7 @@ import listPlugin from '@fullcalendar/list'
 import koLocale from '@fullcalendar/core/locales/ko'
 import Header from '@/components/admin/adminHeader.vue'
 import Sidebar from '@/components/admin/adminSidebar.vue'
-import axios from '@/axios/admin'
-import axiospr from '../../axios/profile'
+import axios from '@/api/plan'
 import Swal from 'sweetalert2'
 
 interface CalendarEvent {
@@ -193,7 +192,7 @@ const calendarOptions = reactive({
 
 async function fetchPlan() {
   try {
-    const response = await axiospr.ListPlan()
+    const response = await axios.ListPlan()
     calendarEvents.value = response.data || []
     colors.value = response.data.map(event => event.backgroundColor);
     console.log(response.data)

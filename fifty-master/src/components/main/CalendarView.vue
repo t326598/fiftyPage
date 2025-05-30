@@ -33,7 +33,7 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import koLocale from '@fullcalendar/core/locales/ko';
 import listPlugin from '@fullcalendar/list';
-import axiospr from '@/axios/profile'
+import axios from '@/api/plan'
 import CalendarLegend from '@/components/sub/CalendarLegend.vue'
 
 const props = defineProps<{ isDark: boolean }>()
@@ -128,7 +128,7 @@ const calendarOptions = reactive({
 
 async function fetchBackground(month: number) {
   try {
-    const response = await axiospr.backgroundList(month);
+    const response = await axios.backgroundList(month);
     backgroundImage.value = response.data.imageUrl;
   } catch (error) {
     console.error(error);
@@ -154,7 +154,7 @@ function formatDate(date: Date | null) {
 
 async function fetchPlan() {
   try {
-    const response = await axiospr.ListPlan()
+    const response = await axios.ListPlan()
     calendarEvents.value = response.data || []
     colors.value = response.data.map(event => event.backgroundColor);
 
@@ -171,4 +171,4 @@ onMounted(async () => {
 
 </script>
 
-<style scoped src="@/assets/mainpage.css"></style>
+<style scoped src="@/assets/style/mainpage.css"></style>

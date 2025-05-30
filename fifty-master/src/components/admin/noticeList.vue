@@ -65,7 +65,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import axios from '@/axios/admin'
+import axios from '@/api/notice'
 import Header from '@/components/admin/adminHeader.vue'
 import Sidebar from '@/components/admin/adminSidebar.vue'
 const isModalOpen = ref(false)
@@ -92,7 +92,7 @@ const updateNotice = async () => {
     })
     alert('수정되었습니다.')
     closeModal()
-    fetchUserList() // 다시 불러오기
+    fetchNoticeList() // 다시 불러오기
   } catch (err) {
     console.error('공지 수정 실패', err)
     alert('수정 중 오류가 발생했습니다.')
@@ -105,16 +105,16 @@ const deleteNotice = async (no: number) => {
   try {
     await axios.deleteNotice(no)
     alert('삭제되었습니다.')
-    fetchUserList()
+    fetchNoticeList()
   } catch (err) {
     console.error('삭제 실패', err)
     alert('삭제 중 오류가 발생했습니다.')
   }
 }
 
-const fetchUserList = async () => {
+const fetchNoticeList = async () => {
   try {
-    const res = await axios.getNoticeList()
+    const res = await axios.ListNotice()
     console.log(res.data)
     userList.value = res.data
   } catch (err) {
@@ -128,7 +128,7 @@ const formatDate = (dateStr: string) => {
 
 
 onMounted(() => {
-  fetchUserList()
+  fetchNoticeList()
 })
 
 const openInsertPopup = () => {
@@ -147,7 +147,7 @@ const openInsertPopup = () => {
   const timer = setInterval(() => {
     if (newWindow?.closed) {
       clearInterval(timer)
-      fetchUserList() // 등록창 닫히면 리스트 갱신
+      fetchNoticeList() // 등록창 닫히면 리스트 갱신
     }
   }, 500)
   

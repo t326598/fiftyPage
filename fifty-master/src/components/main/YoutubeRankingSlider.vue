@@ -23,7 +23,7 @@
 </template>
 <script setup lang="ts">
 import { ref, onMounted, computed, onBeforeUnmount } from 'vue'
-import axiosCt from '../../axios/chart'
+import axiosCt from '../../api/chart'
 
 
 
@@ -96,4 +96,4 @@ onMounted(async () => {
 </script>
 
 
-<style scoped src="@/assets/mainpage.css"></style>
+<style scoped src="@/assets/style/mainpage.css"></style>

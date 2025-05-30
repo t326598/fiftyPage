@@ -34,7 +34,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import axios from "@/axios/profile"
+import axios from "@/api/profile"
 
 const props = defineProps<{
   profile: any

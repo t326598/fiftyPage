@@ -42,7 +42,7 @@
 <script setup lang="ts">
 import Sidebar from '../admin/adminSidebar.vue'
 import Header from '../admin/adminHeader.vue'
-import axios from "@/axios/profile";
+import axios from "@/api/plan";
 import { ref, onMounted} from 'vue'
 import EditMothsModal from '@/components/admin/updateCalendarModal.vue'
 
@@ -52,8 +52,7 @@ const showModal = ref(false)
 
 const fetchCalendarList = async () => {
   try {
-  
-    const res = await axios.ListCalendar()
+    const res = await axios.ListPlan()
     calendarList.value = res.data
     console.log(calendarList.value)
   } catch (err) {

@@ -26,4 +26,4 @@ const scrollToTop = () => {
 
 </script>
 
-<style scoped src="@/assets/mainpage.css"></style>
+<style scoped src="@/assets/style/mainpage.css"></style>

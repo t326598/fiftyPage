@@ -14,7 +14,7 @@
 
 <script setup>
 import { ref } from 'vue'
-import axios  from '../../axios/notice'
+import axios  from '../../api/notice'
 import Swal from 'sweetalert2'
 
 const form = ref({
