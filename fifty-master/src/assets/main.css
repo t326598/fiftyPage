@@ -5,3 +5,7 @@ html, body {
     height: 100%;
   }
   
+.dark-calendar .fc {
+  background-color: #121212;
+  color: #ffffff;
+}

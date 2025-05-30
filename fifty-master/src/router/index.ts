@@ -12,13 +12,14 @@ import RegisterView from "@/components/views/RegisterView.vue";
 
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import { useAuth } from '@/composables/useAuth';
+import MainPage from "@/views/MainPage.vue";
 
 interface Meta {
   requiresAuth?: boolean;
   roles?: string[];
 }
 const routes: RouteRecordRaw[] = [
-  { path: '/', name: 'HomePage', component: HomePage },
+  { path: '/', name: 'MainPage', component: MainPage },
   { path: '/member', name: 'MemberDetail', component: MemberDetail },
   { path: '/login', component: LoginView },
   { path: '/register', component: RegisterView },
