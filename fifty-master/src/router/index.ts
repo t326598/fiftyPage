@@ -1,4 +1,3 @@
-import AdminHeader from "@/components/admin/adminHeader.vue";
 import CalenderList from "@/components/admin/calenderList.vue";
 import ImageList from "@/components/admin/imageList.vue";
 import InsertFiles from "@/components/admin/insertFiles.vue";
@@ -18,12 +17,6 @@ interface Meta {
   requiresAuth?: boolean;
   roles?: string[];
 }
-
-const adminMeta: Meta = {
-  requiresAuth: true,
-  roles: ['ROLE_ADMIN']
-}
-
 const routes: RouteRecordRaw[] = [
   { path: '/', name: 'HomePage', component: HomePage },
   { path: '/member', name: 'MemberDetail', component: MemberDetail },
