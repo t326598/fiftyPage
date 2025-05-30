@@ -55,7 +55,9 @@
 
         <!-- 캘린더 -->
         <CalendarLegend />
-        <FullCalendar :options="calendarOptions" />
+        <div :class="{ 'dark-calendar': isDark }">
+          <FullCalendar :options="calendarOptions" />
+        </div>
         <!-- 모달 -->
         <div v-if="isModalOpen" class="modal-overlay" @click.self="isModalOpen = false">
           <div class="modal-content1">
@@ -93,7 +95,7 @@
       </div>
     </div>
     <hr class="section-divider" />
-         <div class="rank">
+    <div class="rank">
       <h1 style="margin-bottom: 10px;">조회수 TOP 10 영상</h1>
       <div class="slider-container">
         <div class="slider-wrapper" ref="sliderRef">
@@ -107,15 +109,16 @@
 
             <img :src="video.thumbnailUrl" :alt="video.title" class="thumbnail" />
             <div class="info">
-              <p class="title" style="color: black; font-size: 20px;">{{ video.title }}</p>
-              <p class="views" style="color: black; font-size: 15px;">{{ formatViews(video.viewCount) }} views</p>
+              <p class="title" style=" font-size: 20px;">{{ video.title }}</p>
+              <p class="views" style=" font-size: 15px;">{{ formatViews(video.viewCount) }} views</p>
             </div>
           </div>
         </div>
       </div>
     </div>
     <hr class="section-divider" />
-    <div class="profile" style="margin-top: 50px;">
+       <h1 style="margin-bottom: 10px;">멤버 프로필</h1>
+    <div class="profile" style="margin-top: 10px;">
       <div class="card-grid">
         <div v-for="member in profile" :key="member.no" class="member-card" @click="showProfileBox(member)">
           <img v-if="!isSmallScreen" :src="`http://localhost:8080/upload/${member.filePath}`" :alt="member.title"
@@ -130,9 +133,9 @@
       <div v-if="showProfile" class="profile-filter-section" :key="selectedMemberNo?.memberNo">
         <div class="profile-box">
           <div class="profile-box-content" v-if="selectedMemberNo">
-            <section style="width: 30%;">
+            <section style="width: 30%; overflow: hidden;">
               <img :src="`http://localhost:8080/upload/${selectedMemberNo.filePath}`" :alt="selectedMemberNo.title"
-                class="member-profile" style="width: 90%;" />
+                class="member-profile" style="width: 259px; height: 323px; object-fit: cover;" />
             </section>
             <section style="width: 60%; text-align: center;">
               <h1 style="font-size: 40px;">{{ selectedMemberNo.title }}</h1>
@@ -157,15 +160,42 @@
       <span>{{ currentPage }} / {{ totalPages }}</span>
       <button @click="changePage('next')" :disabled="currentPage === totalPages">Next</button>
     </div>
+    <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 Your Company. All rights reserved.</p>
+      <ul class="footer-links">
+        <li><a href="#">이용약관</a></li>
+        <li><a href="#">개인정보처리방침</a></li>
+        <li><a href="#">문의하기</a></li>
+      </ul>
+    </div>
+  </footer>
   </div>
 
   <div v-if="showModal" class="modal-overlay" @click.self="closeModal">
     <div class="modal-content">
       <img :src="selectedImage" alt="확대 이미지" class="modal-img" />
       <button class="modal-close" @click="closeModal">×</button>
-      
     </div>
   </div>
+  
+ <div class="fixed-buttons">
+    <button class="top-button" @click="scrollToTop">
+      ⬆️ 최상단
+    </button>
+    <a
+      href="https://open.kakao.com/o/yourChatLink" 
+      target="_blank"
+      rel="noopener noreferrer"
+      class="kakao-chat-button"
+    >
+      💬 카카오톡 문의
+    </a>
+
+  </div>
+
+
+
 </template>
 
 <script setup lang="ts">
@@ -191,6 +221,12 @@ const notices = ref([]);
 
 const isDark = ref(false);
 
+const scrollToTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth',
+  });
+};
 
 const isModalOpen = ref(false);
 const selectedEvent = ref({
@@ -550,7 +586,98 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.dark-calendar .fc {
+  background-color: #121212;
+  color: #ffffff;
+}
 
+.dark-calendar .fc-event {
+  background-color: #333333;
+  border-color: #555555;
+  color: #ffffff;
+}
+
+.footer {
+  background-color: #f4f4f4;
+  padding: 20px 40px;
+  text-align: center;
+  border-top: 1px solid #ccc;
+}
+
+.footer-content {
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.footer p {
+  margin: 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
+
+.footer-links li a {
+  text-decoration: none;
+  color: #007acc;
+  font-size: 14px;
+}
+
+.footer-links li a:hover {
+  text-decoration: underline;
+}
+.fixed-buttons {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  z-index: 1000;
+}
+
+.kakao-chat-button,
+.top-button {
+  padding: 12px 16px;
+  border-radius: 50px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+/* 카카오톡 버튼 스타일 */
+.kakao-chat-button {
+  background-color: #fae100;
+  color: #000;
+}
+
+.kakao-chat-button:hover {
+  background-color: #ffe000;
+  transform: translateY(-2px);
+}
+
+/* 최상단 버튼 스타일 */
+.top-button {
+  background-color: #333;
+  color: white;
+  border: none;
+}
+
+.top-button:hover {
+  background-color: #555;
+  transform: translateY(-2px);
+}
 
 
 .section-divider {
@@ -761,6 +888,10 @@ onMounted(async () => {
   
 }
 
+.title, .views{
+  color:black
+}
+
 .hero-image1 {
   min-width: 600px;
    max-width: 1200px;
@@ -893,6 +1024,7 @@ onMounted(async () => {
   justify-content: space-around;
   text-align: left;
   padding: 20px;
+  width: 100%;
 }
 
 .close-btn {
@@ -1278,7 +1410,7 @@ h1 {
 }
 
 .modal-img {
-  width: 500px;
+  height: 500px;
   object-fit: contain;
   border-radius: 20px;
 }
@@ -1361,6 +1493,52 @@ h1 {
   color: #666;
 }
 
+
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode p,
+.dark-mode span,
+.dark-mode li,
+.dark-mode a {
+  color: white;
+}
+
+.dark-mode .footer {
+  background-color: #333;
+  color: white;
+}
+
+.dark-mode .footer {
+  color: #ccc;
+}
+
+.dark-mode .modal-content1,
+.dark-mode .notice-card,
+.dark-mode .calendar-wrapper,
+.dark-mode .profile-box-content,
+.dark-mode .card-grid {
+  color: white;
+}
+
+.dark-mode .member-profile,
+.dark-mode .member-img {
+  border: 1px solid #333;
+}
+
+.dark-mode .rank-badge {
+  color: #fff; /* 밝은 글자색 */
+}
+.dark-mode .rank-badge.top-highlight {
+  background-color: #bb86fc; /* 강조 색상 (보라색 계열 예시) */
+}
+
+.dark-mode .rank-badge.top-regular {
+  color: #333; /* 일반 색상 */
+}
+.dark-mode .rank-badge .info p {
+  color: #ffffff; /* 일반 색상 */
+}
 
 
 </style>
