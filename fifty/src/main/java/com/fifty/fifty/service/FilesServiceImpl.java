@@ -1,6 +1,7 @@
 package com.fifty.fifty.service;
 
 import java.io.File;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -13,7 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fifty.fifty.domain.Files;
+import com.fifty.fifty.domain.FilePath;
 import com.fifty.fifty.mapper.FilesMapper;
 
 @Service
@@ -30,7 +31,7 @@ public class FilesServiceImpl implements FilesService {
 
 
    @Override
-    public int insert(Files file) throws Exception {
+    public int insert(FilePath file) throws Exception {
         int result = 0;
         MultipartFile multipartFile = file.getData();
         
@@ -67,7 +68,13 @@ public class FilesServiceImpl implements FilesService {
 }
 
     @Override
-    public int update(Files files) throws Exception {
+    public int update(FilePath files) throws Exception {
+             if (files.getOldFilePath() != null && !files.getOldFilePath().equals(files.getName())) {
+
+                    Path oldFile = Paths.get("/path/to/upload/dir", files.getOldFilePath());
+                    Files.deleteIfExists(oldFile);
+                }
+
         int result = filesMapper.update(files);
 
         return result;
@@ -81,19 +88,19 @@ public class FilesServiceImpl implements FilesService {
     }
 
     @Override
-    public int insertList(List<Files> fileList) throws Exception {
+    public int insertList(List<FilePath> fileList) throws Exception {
         int result = 0;
         if(fileList == null || fileList.isEmpty())
         return result;
 
-        for (Files files : fileList){
+        for (FilePath files : fileList){
             result += insert(files);
         }
         return result;
     }
 
     @Override
-    public List<Files> list(Map<String, Object> params) throws Exception {
+    public List<FilePath> list(Map<String, Object> params) throws Exception {
         return filesMapper.list(params); 
     }
 
@@ -103,7 +110,7 @@ public class FilesServiceImpl implements FilesService {
     }
 
     @Override
-    public List<Files> AllList(Map<String, Object> params) throws Exception {
+    public List<FilePath> AllList(Map<String, Object> params) throws Exception {
         return filesMapper.AllList(params);
     }
 

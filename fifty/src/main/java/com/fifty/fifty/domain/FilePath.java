@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import lombok.Data;
 
 @Data
-public class Files {
+public class FilePath {
     private Long no;
     private String id;
     private String crt;
@@ -18,10 +18,11 @@ public class Files {
     private Long size;
     private String trueDay;
     private Date createdAt; 
+    private String oldFilePath;
 
     private MultipartFile data;
 
-        public Files(){
+        public FilePath(){
             this.id = UUID.randomUUID().toString();
         }
 

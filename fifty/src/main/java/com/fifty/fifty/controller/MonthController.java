@@ -53,11 +53,6 @@ public class MonthController {
         public ResponseEntity<?> updateBackground(@RequestBody Months request) {
             try {
                 System.out.println("왜안나오나요??" + request);
-                // 이전 파일 삭제 처리
-                if (request.getOldFilePath() != null && !request.getOldFilePath().equals(request.getImageUrl())) {
-                    Path oldFile = Paths.get("/path/to/upload/dir", request.getOldFilePath());
-                    Files.deleteIfExists(oldFile);
-                }
 
                 // 프로필 업데이트 처리
                 int result = monthServiceImpl.monthsUpdate(request);

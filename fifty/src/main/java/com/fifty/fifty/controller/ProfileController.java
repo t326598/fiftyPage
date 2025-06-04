@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fifty.fifty.domain.Profile;
+import com.fifty.fifty.service.FilesServiceImpl;
 import com.fifty.fifty.service.ProfileServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,14 +43,12 @@ public class ProfileController {
     @Autowired
     private ProfileServiceImpl profileServiceImpl;
 
-     @Value("${upload.path}")
-    private String uploadPath;
-
     @GetMapping
     public ResponseEntity getMethodName() throws Exception {
         List<Profile> list = profileServiceImpl.list();
 
         Map<String, Object> result = new HashMap<>();
+        log.info(list+  "이거ㅗ나옴?");
         result.put("list", list);
 
         return ResponseEntity.ok(result);
@@ -61,12 +60,7 @@ public class ProfileController {
         public ResponseEntity<?> updateProfile(@RequestBody Profile request) {
             try {
                 System.out.println("왜안나오나요??" + request);
-                // 이전 파일 삭제 처리
-                if (request.getOldFilePath() != null && !request.getOldFilePath().equals(request.getFilePath())) {
-                    Path oldFile = Paths.get("/path/to/upload/dir", request.getOldFilePath());
-                    Files.deleteIfExists(oldFile);
-                }
-
+       
                 // 프로필 업데이트 처리
                 int result = profileServiceImpl.update(request);
 
@@ -76,34 +70,7 @@ public class ProfileController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("프로필 수정 실패");
             }
         }
-    
 
-   @PostMapping
-    public ResponseEntity<Map<String, String>> uploadFile(@RequestParam(value = "file", required = false) MultipartFile file) throws IOException {
-        // 서버에 파일 저장
-          System.out.println("나옴:?" + file);
-        MultipartFile multipartFile = file;
-        
-
-    String originName = multipartFile.getOriginalFilename();
-    long fileSize = multipartFile.getSize();
-    String fileName = UUID.randomUUID().toString() + "_" + originName;
-    byte[] fileData = multipartFile.getBytes();
-    String filePath = uploadPath + "/" + fileName;
-
-    File uploadFile = new File(filePath);
-
-    File parentDir = uploadFile.getParentFile();
-    if (!parentDir.exists()) {
-        parentDir.mkdirs();  // 디렉토리 생성
-}
-
-    FileCopyUtils.copy(fileData, uploadFile);
-
-        Map<String, String> response = new HashMap<>();
-        response.put("filePath", fileName);
-        return ResponseEntity.ok(response);
-    }
 
     
 }

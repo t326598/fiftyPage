@@ -5,23 +5,24 @@
 
 <mapper namespace="com.fifty.fifty.mapper.FilesMapper">
 
-    <select id="list" parameterType="map" resultType="Files">
-        SELECT *
-        FROM files
-        <where>
-            1 = 1
+<select id="list" parameterType="map" resultType="FilePath">
+    SELECT *
+    FROM files
+    <where>
+        1 = 1
         <if test="crt != null and crt != ''">
-            AND crt = #{crt}
+            AND crt REGEXP CONCAT('(^|,)', #{crt}, '(,|$)')
         </if>
-        <if test="trueDay != null and trueDay !=''">
+        <if test="trueDay != null and trueDay != ''">
             AND true_day = #{trueDay}
         </if>
-        </where>
-        ORDER BY created_at DESC
-        LIMIT #{start}, #{rows}
-    </select>
+    </where>
+    ORDER BY created_at DESC
+    LIMIT #{start}, #{rows}
+</select>
 
-    <select id="ALLlist" resultType="Files">
+
+    <select id="ALLlist" resultType="FilePath">
         SELECT *
         FROM files
         WHERE  crt = 7
@@ -36,8 +37,7 @@
     
     <update id="update">
         UPDATE FROM files
-        SET crt = #{crt},
-            path = #{path},
+        SET path = #{path},
             name = #{name},
             size = #{size},
             true_day = #{trueDay},

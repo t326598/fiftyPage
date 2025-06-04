@@ -5,8 +5,9 @@
 
 <mapper namespace="com.fifty.fifty.mapper.ProfileMapper">
     <select id="list" resultType="Profile">
-        SELECT *
-        FROM Profile
+        SELECT p.*, f.name
+        FROM Profile p JOIN  Files f ON p.file_no = f.no
+        WHERE f.crt = '7'
     </select>
 
 
@@ -15,8 +16,7 @@
         UPDATE Profile
         SET content = #{content},
             sub_content = #{subContent},
-            title = #{title},
-            file_path = #{filePath}
+            title = #{title}
         WHERE no = #{no}
     </update>
     

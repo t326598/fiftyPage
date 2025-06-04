@@ -43,8 +43,9 @@ CREATE TABLE `files` (
 
 CREATE TABLE `Profile` (
 	`no`	INT	NOT NULL PRIMARY KEY AUTO_INCREMENT	COMMENT '프로필번호',
-	`file_path`	VARCHAR(500) NULL	COMMENT '프로필 파일',
+	`file_no`	BIGINT NULL	COMMENT '프로필 파일',
 	`content`	VARCHAR(1000)	NOT NULL	COMMENT '프로필 내용',
+  `sub_content` VARCHAR(255) NOT NULL COMMENT'프로필 서브내용',
 	`title`	VARCHAR(100)	NOT NULL	COMMENT '프로필 제목'
 );
 
@@ -63,9 +64,16 @@ CREATE TABLE `users` (
 
 CREATE TABLE `user_auth` (
     no          BIGINT       NOT NULL AUTO_INCREMENT PRIMARY KEY COMMENT "PK",
-    username    VARCHAR(100) NOT NULL COMMENT "아이디",
+    user_no     BIGINT NOT NULL COMMENT "아이디",
     auth        VARCHAR(100) NOT NULL COMMENT "권한"
 ) COMMENT "회원권한";
+
+
+CREATE TABLE monthly_background (
+  no INT AUTO_INCREMENT PRIMARY KEY,
+  month INT NOT NULL UNIQUE, -- 1~12월
+  file_no BIGINT NOT NULL
+);
 
 DROP TABLE IF EXISTS `plan`;
 DROP TABLE IF EXISTS `files`;
@@ -93,29 +101,15 @@ VALUES
   ('이용약관 변경 안내', '2025년 6월 1일부터 새로운 이용약관이 적용됩니다. 변경된 내용은 홈페이지 하단에서 확인 가능합니다.', NOW());
 
 
-CREATE TABLE monthly_background (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  month INT NOT NULL UNIQUE, -- 1~12월
-  image_url VARCHAR(255) NOT NULL
-);
 
-
-INSERT INTO monthly_background (month, image_url) VALUES
-(1, 'C:/upload/c47cccf7-9700-45b0-b2d3-89898f75d965_1.webp'),
-(2, 'C:/upload/a1e87334-ab8e-4f9c-9cff-964faacae2e2_2.webp'),
-(3, 'C:/upload/2cab1dfc-37ce-4bfd-99f1-84faed1f4f25_1.png'),
-(4, 'C:/upload/8c654b4d-ed45-4450-9e37-be10cddb2bfa_xcvdsf.jpg'),
-(5, 'C:/upload/e829be92-4cbf-41c7-a6d6-6e22610673ef_dfgdfg.jpg'),
-(6, 'C:/upload/8cb44160-9970-4c46-8f38-9842cc8a0024_ChatGPT Image 2025년 5월 16일 오전 01_49_15.png'),
-(7, 'C:/upload/71889616-0da8-4fb0-81a6-a833f58bbfeb_ChatGPT Image 2025년 5월 16일 오전 12_47_42.png'),
-(8, 'C:/upload/ae53b7dd-9bc9-40f1-a5e9-1b5e890e1a25_gm&tr.png'),
-(9, 'C:/upload/a7d3255d-c4cb-4986-bf26-b41c65f6fcf0_ChatGPT Image 2025년 5월 16일 오전 01_42_02.png'),
-(10, 'C:/upload/2c9ac7be-cc5d-4dd6-9c72-7dde4a1dd4db_ChatGPT Image 2025년 5월 16일 오전 01_26_46.png'),
-(11, 'C:/upload/3f749d0a-d23c-41bf-a363-a1b46feb5ef9_2.jpg'),
-(12, 'C:/upload/b202bcbd-0803-403d-bf69-44f52c050c75_5.jpg');
 
 ALTER TABLE fifty_fifty_music_char
 ADD COLUMN chart_date DATE GENERATED ALWAYS AS (DATE(`date`)) STORED;
 
 ALTER TABLE fifty_fifty_music_char
 ADD UNIQUE KEY uq_platform_song_date (platform, song_title, DATE(date));
+
+
+  SELECT p.*, f.name
+        FROM Profile p JOIN  Files f ON p.file_no = f.no
+        WHERE f.crt = '7'
