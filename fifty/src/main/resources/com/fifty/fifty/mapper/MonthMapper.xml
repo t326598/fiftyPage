@@ -6,12 +6,14 @@
 <mapper namespace="com.fifty.fifty.mapper.MonthMapper">
 
 <select id="calendarList" resultType="Months">
-    SELECT *
-    FROM monthly_background
+    SELECT m.*, f.name
+    FROM monthly_background m JOIN files f ON m.file_no = f.no
 </select>
 
   <select id="getBackgroundByMonth" resultType="Months">
-    SELECT * FROM monthly_background WHERE month = #{month}
+   SELECT m.*, f.name
+    FROM monthly_background m JOIN files f ON m.file_no = f.no
+    WHERE month = #{month}
   </select>
 
   <update id="monthsUpdate">

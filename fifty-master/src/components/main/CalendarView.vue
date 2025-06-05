@@ -129,7 +129,7 @@ const calendarOptions = reactive({
 async function fetchBackground(month: number) {
   try {
     const response = await axios.backgroundList(month);
-    backgroundImage.value = response.data.imageUrl;
+    backgroundImage.value = response.data.name;
   } catch (error) {
     console.error(error);
   }

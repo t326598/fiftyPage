@@ -80,6 +80,9 @@ DROP TABLE IF EXISTS `files`;
 DROP TABLE IF EXISTS `Profile`;
 DROP TABLE IF EXISTS `fifty_fifty_music_char`;
 DROP TABLE IF EXISTS `Notice`;
+DROP TABLE IF EXISTS `monthly_background`;
+  SELECT m.*, f.name
+    FROM monthly_background m JOIN files f ON m.file_no = f.no
 
 INSERT INTO plan (file_no, crt, title, content, start_at, end_at, created_at)
 VALUES

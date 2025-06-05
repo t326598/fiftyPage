@@ -18,7 +18,7 @@
                 :key="months.id"
                 class="profileCard text-center"
               >
-              <img :src="`http://localhost:8080/upload/${months.imageUrl}`" :alt="months.month" class="member-img" />
+              <img :src="`http://localhost:8080/upload/${months.name}`" :alt="months.month" class="member-img" />
                 <h5 class="mt-2">{{ months.month }} 월</h5>
                 <button class="updateBtn mt-1" @click="editCalendar(months.id)">수정</button>
               </div>
@@ -52,7 +52,7 @@ const showModal = ref(false)
 
 const fetchCalendarList = async () => {
   try {
-    const res = await axios.ListPlan()
+    const res = await axios.ListCalendar()
     calendarList.value = res.data
     console.log(calendarList.value)
   } catch (err) {
