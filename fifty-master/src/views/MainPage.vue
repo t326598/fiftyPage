@@ -1,9 +1,9 @@
 <template>
   <div :class="['mainbody', { 'dark-mode': isDark }]">
-    <ThemeToggle :isDark="isDark" @toggle="toggleTheme" />
-
+    
     <MainHeader :isDark="isDark" />
-
+    
+    <ThemeToggle :isDark="isDark" @toggle="toggleTheme" />
     <CommunityLinks />
 
    <CalendarView :isDark="isDark" />
