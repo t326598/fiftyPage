@@ -116,7 +116,7 @@ public class JwtProvider {
             List<UserAuth> authList = ((List<?>) roles)
                     .stream()
                     .map(auth -> UserAuth.builder()
-                            .username(username)
+                            .userNo(user.getNo())
                             .auth(auth.toString())
                             .build())
                     .collect(Collectors.toList());

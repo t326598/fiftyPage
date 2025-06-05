@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fifty.fifty.domain.Files;
+import com.fifty.fifty.domain.FilePath;
 import com.fifty.fifty.domain.Notice;
 import com.fifty.fifty.service.NoticeServiceImpl;
 

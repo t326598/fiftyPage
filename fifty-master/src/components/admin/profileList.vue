@@ -18,7 +18,7 @@
                 :key="profile.no"
                 class="profileCard text-center"
               >
-              <img :src="`http://localhost:8080/upload/${profile.filePath}`" :alt="profile.name" class="member-img" />
+              <img :src="`http://localhost:8080/upload/${profile.name}`" :alt="profile.name" class="member-img" />
                 <h5 class="mt-2">{{ profile.title }}</h5>
                 <h5 class="mt-2">{{ profile.subContent }}</h5>
                 <button class="updateBtn mt-1" @click="editProfile(profile.no)">수정</button>

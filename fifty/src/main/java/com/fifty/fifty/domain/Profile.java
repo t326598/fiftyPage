@@ -7,11 +7,11 @@ import lombok.Data;
 @Data
 public class Profile {
     private Long no;
-    private String filePath;
+    private Long fileNo;
     private String content;
     private String title;
     private String subContent;
-    private String oldFilePath;
+    private String name;
 
     private MultipartFile data;
 }

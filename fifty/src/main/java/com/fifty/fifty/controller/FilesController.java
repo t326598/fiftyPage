@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.fifty.fifty.domain.Files;
+import com.fifty.fifty.domain.FilePath;
 import com.fifty.fifty.service.FilesServiceImpl;
 
 import lombok.extern.slf4j.Slf4j;
@@ -49,7 +49,7 @@ public class FilesController {
         params.put("start", start);
         params.put("rows", rows);
 
-        List<Files> list = filesService.list(params);
+        List<FilePath> list = filesService.list(params);
         int total = filesService.count(params);
 
         Map<String, Object> result = new HashMap<>();
@@ -63,7 +63,7 @@ public class FilesController {
     
 
     @PostMapping("")
-    public ResponseEntity<?> create(@ModelAttribute Files file) {
+    public ResponseEntity<?> create(@ModelAttribute FilePath file) {
         try {
      
 
@@ -82,7 +82,7 @@ public class FilesController {
     }
     
     @PutMapping()
-    public ResponseEntity<?> update(@ModelAttribute Files file) {
+    public ResponseEntity<?> update(@ModelAttribute FilePath file) {
           try {
             int result = filesService.update(file);
             if(result > 0){

@@ -34,7 +34,7 @@ public class UserServiceImpl implements UserService {
         // 권한 등록
         if (result > 0) {
             UserAuth userAuth = UserAuth.builder()
-                    .username(user.getUsername())
+                    .userNo(user.getNo())
                     .auth("ROLE_USER")
                     .build();
             result += userMapper.insertAuth(userAuth);

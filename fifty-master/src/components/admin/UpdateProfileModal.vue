@@ -51,7 +51,7 @@ const form = ref({
   filePath: props.profile.filePath // 기존 이미지 경로 (서버 저장된 파일명 등)
 })
 
-const previewUrl = ref<string | null>(`http://localhost:8080/upload/${props.profile.filePath}`)
+const previewUrl = ref<string | null>(`http://localhost:8080/upload/${props.profile.name}`)
 
 const onImageChange = (e: Event) => {
   const file = (e.target as HTMLInputElement).files?.[0]

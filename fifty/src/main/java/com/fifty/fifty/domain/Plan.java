@@ -10,7 +10,6 @@ import lombok.Data;
 @Data
 public class Plan {
     private Long no;
-    private Long fileNo;
     private Long crt;
     private String title;
     private String content;
@@ -18,7 +17,6 @@ public class Plan {
     private LocalDateTime startAt;      // 시작 시간 (FullCalendar 대응)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime endAt;        // 종료 시간 (FullCalendar 대응)
-    private Boolean allDay;  
     private Date updatedAt;
     private Date createdAt;
 }

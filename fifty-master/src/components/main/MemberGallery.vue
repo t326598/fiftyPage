@@ -3,7 +3,7 @@
     <div class="profile" style="margin-top: 10px;">
       <div class="card-grid">
         <div v-for="member in profile" :key="member.no" class="member-card" @click="showProfileBox(member)">
-          <img v-if="!isSmallScreen" :src="`http://localhost:8080/upload/${member.filePath}`" :alt="member.title"
+          <img v-if="!isSmallScreen" :src="`http://localhost:8080/upload/${member.name}`" :alt="member.title"
             class="member-img" />
           <p v-else class="member-text">{{ member.title }}</p>
         </div>
@@ -16,7 +16,7 @@
         <div class="profile-box">
           <div class="profile-box-content" v-if="selectedMemberNo">
             <section style="width: 30%; overflow: hidden;">
-              <img :src="`http://localhost:8080/upload/${selectedMemberNo.filePath}`" :alt="selectedMemberNo.title"
+              <img :src="`http://localhost:8080/upload/${selectedMemberNo.name}`" :alt="selectedMemberNo.title"
                 class="member-profile" style="width: 259px; height: 323px; object-fit: cover;" />
             </section>
             <section style="width: 60%; text-align: center;">
