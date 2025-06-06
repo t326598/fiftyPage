@@ -16,9 +16,9 @@
 
     <insert id="insertChart">
         INSERT INTO fifty_fifty_music_char
-        (no, video_id, title, thumbnail_url, video_url, view_count, published_at)
+        ( video_id, title, thumbnail_url, video_url, view_count, published_at)
         VALUES
-        (#{no}, #{videoId}, #{title}, #{thumbnailUrl}, #{videoUrl}, #{viewCount}, #{publishedAt})
+        ( #{videoId}, #{title}, #{thumbnailUrl}, #{videoUrl}, #{viewCount}, #{publishedAt})
     </insert>
 
     <update id="updateChart">
