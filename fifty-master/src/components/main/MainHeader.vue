@@ -6,6 +6,7 @@
           :src="isDark ? require('@/assets/image/test.png') : require('@/assets/image/3333.svg')"
           alt="fiftyfifty"
           class="fifty-img"
+
         />
       </transition>
     </div>
