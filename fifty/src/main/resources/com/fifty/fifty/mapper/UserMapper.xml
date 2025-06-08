@@ -26,34 +26,34 @@
             column : 서브쿼리에 넘겨줄 값의 컬럼명
             ofType : 서브쿼리로 조회된 데이터를 매핑할 객체타입
          -->
-        <collection property="authList" select="authList" column="username" ofType="UserAuth"></collection>
+        <collection property="authList" select="authList" column="no" ofType="UserAuth"></collection>
     </resultMap>
         
     <resultMap type="UserAuth" id="authMap">
         <result property="no" column="no" />
-        <result property="username" column="username" />
+        <result property="userNo" column="user_no" />
         <result property="auth" column="auth" />
     </resultMap>
 
   
     <!-- 회원 조회 - id -->
-    <select id="select" resultMap="userMap">
-        SELECT *
-        FROM users
-        WHERE username = #{username}
-    </select>
+<select id="select" resultMap="userMap">
+    SELECT *
+    FROM users
+    WHERE username = #{username}
+</select>
 
 
     <!-- 회원 권한 -->
     <select id="authList" resultMap="authMap">
         SELECT *
         FROM user_auth
-        WHERE username = #{username}
+        WHERE user_no = #{userNo}
     </select>
 
 
     <!-- 회원 가입 -->
-    <insert id="join">
+    <insert id="join" useGeneratedKeys="true" keyProperty="no">
         INSERT INTO users ( id, username, password, email )
         VALUES ( #{id}, #{username}, #{password}, #{email} )
     </insert>
@@ -68,19 +68,19 @@
                 <if test="email != null">email = #{email},</if>
                 updated_at = now()
             </set>
-        WHERE username = #{username}
+        WHERE user_no = #{userNo}
     </update>
 
     <!-- 회원 권한 등록 -->
     <insert id="insertAuth">
-        INSERT INTO user_auth ( username, auth )
-        VALUES ( #{username}, #{auth} )
+        INSERT INTO user_auth ( user_no, auth )
+        VALUES ( #{userNo}, #{auth} )
     </insert>
 
     <!-- 회원 삭제 -->
     <delete id="delete">
         DELETE FROM users
-         WHERE username = #{username}
+         WHERE user_no = #{userNo}
     </delete>
 
     <!-- 이메일 조회 -->

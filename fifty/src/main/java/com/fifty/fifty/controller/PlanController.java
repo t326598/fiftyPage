@@ -82,7 +82,10 @@ private String getCategoryColor(Long crt) {
     @PostMapping()
     public ResponseEntity<?> create(@RequestBody Plan plan) {
         try {
+            System.out.println("나옴?");
+            System.out.println(plan + "ㅇ");
             int result = planServiceImpl.insert(plan);
+            System.out.println(result);
             if(result > 0){
                 return new ResponseEntity<>("OK", HttpStatus.OK);
             }

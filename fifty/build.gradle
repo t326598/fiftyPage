@@ -8,6 +8,14 @@ plugins {
 group = 'com.fifty'
 version = '0.0.1-SNAPSHOT'
 
+bootJar {
+    enabled = true   // bootJar 활성화 (jar 빌드)
+}
+
+bootWar {
+    enabled = true
+}
+
 java {
 	toolchain {
 		languageVersion = JavaLanguageVersion.of(17)
