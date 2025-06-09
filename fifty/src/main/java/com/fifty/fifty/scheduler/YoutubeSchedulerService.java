@@ -1,9 +1,11 @@
-package com.fifty.fifty.service;
+package com.fifty.fifty.scheduler;
 
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
+import com.fifty.fifty.service.YoutubeService;
 
 
 @Service

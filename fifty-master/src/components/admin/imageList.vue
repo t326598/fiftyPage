@@ -89,16 +89,6 @@ const selectedCrt = ref('')
 const selectedYear = ref('')
 
 
-const openEditModal = (user: any) => {
-  editData.value = { ...user }
-  isModalOpen.value = true
-}
-
-// 모달 닫기
-const closeModal = () => {
-  isModalOpen.value = false
-}
-
 
 
 const totalPages = computed(() => {
@@ -194,15 +184,27 @@ const openInsertPopup = () => {
 }
 
 
-const getCrtName = (crt: number) => {
-  const map: Record<number, string> = {
-    1: '키나',
-    2: '문샤넬',
-    3: '예원',
-    4: '하나',
-    5: '아테나',
+const getCrtName = (crtValue: string | number): string => {
+  const map: Record<string, string> = {
+    '1': '키나',
+    '2': '문샤넬',
+    '3': '예원',
+    '4': '하나',
+    '5': '아테나',
   }
-  return map[crt] || '알 수 없음'
+
+  if (typeof crtValue === 'number') {
+    return map[crtValue.toString()] || '알 수 없음'
+  }
+
+  if (typeof crtValue === 'string') {
+    return crtValue
+      .split(',')
+      .map(c => map[c.trim()] || '알 수 없음')
+      .join(', ')
+  }
+
+  return '알 수 없음'
 }
 
 </script>

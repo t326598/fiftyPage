@@ -10,6 +10,9 @@
     FROM files
     <where>
         1 = 1
+        AND crt NOT REGEXP '(^|,)6(,|$)'
+        AND crt NOT REGEXP '(^|,)7(,|$)'
+        AND crt NOT REGEXP '(^|,)8(,|$)'
         <if test="crt != null and crt != ''">
             AND crt REGEXP CONCAT('(^|,)', #{crt}, '(,|$)')
         </if>
@@ -22,13 +25,16 @@
 </select>
 
 
-    <select id="ALLlist" resultType="FilePath">
+    <select id="AllList" resultType="FilePath">
         SELECT *
         FROM files
-        WHERE  crt = 7
     </select>
 
-
+    <select id="select" resultType="FilePath">
+        SELECT *
+        FROM files
+        WHERE no = #{no}
+    </select>
 
     <insert id="insert">
         INSERT INTO files (crt, path, name, size, true_day, created_at)
@@ -36,13 +42,13 @@
     </insert>
     
     <update id="update">
-        UPDATE FROM files
+        UPDATE files
         SET path = #{path},
             name = #{name},
             size = #{size},
             true_day = #{trueDay},
             created_at = now()
-        WHERE = no - #{no}
+        WHERE no = #{no}
     </update>
 
     <delete id="delete">

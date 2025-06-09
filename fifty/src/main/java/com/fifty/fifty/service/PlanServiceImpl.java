@@ -26,7 +26,6 @@ public class PlanServiceImpl implements PlanService {
 
     @Override
     public int insert(Plan plan) throws Exception {
-        System.out.println(plan + "이거나오나요?");
        int result = planMapper.insert(plan);
        return result;
     }

@@ -20,7 +20,7 @@
 
       <div class="form-group">
         <label>이미지</label>
-        <input type="file" @change="onImageChange" />
+        <input type="file" accept="image/*" @change="onImageChange" />
         <img v-if="previewUrl" :src="previewUrl" class="preview" />
       </div>
 
@@ -35,6 +35,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import axios from "@/api/profile"
+import axiosfile from "@/api/files"
 
 const props = defineProps<{
   profile: any
@@ -48,7 +49,7 @@ const form = ref({
   subContent: props.profile.subContent,
   content: props.profile.content,
   file: null as File | null,       // 선택한 새 이미지 파일
-  filePath: props.profile.filePath // 기존 이미지 경로 (서버 저장된 파일명 등)
+  filePath: props.profile.path, // 기존 이미지 경로 (서버 저장된 파일명 등)
 })
 
 const previewUrl = ref<string | null>(`http://localhost:8080/upload/${props.profile.name}`)
@@ -56,6 +57,7 @@ const previewUrl = ref<string | null>(`http://localhost:8080/upload/${props.prof
 const onImageChange = (e: Event) => {
   const file = (e.target as HTMLInputElement).files?.[0]
   if (file) {
+    console.log(file)
     form.value.file = file
     previewUrl.value = URL.createObjectURL(file)
   }
@@ -63,10 +65,11 @@ const onImageChange = (e: Event) => {
 
 const uploadFile = async (file: File): Promise<string> => {
   const formData = new FormData()
-  formData.append('file', file)
-  const response = await axios.UpdateImage( formData, {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  })
+  formData.append('no', props.profile.fileNo)
+  formData.append('data', file)
+  formData.append('oldFilePath', props.profile.path)
+  console.log([...formData.entries()]); 
+  const response = await axiosfile.updateFiles( formData)
   console.log(response.data)
 
 
@@ -80,14 +83,12 @@ const submit = async () => {
     if (form.value.file) {
       newFilePath = await uploadFile(form.value.file)
     }
-    // 프로필 수정 API 호출, 기존 파일 경로도 보내서 서버가 이전 파일 삭제 가능하게
+
     const res = await axios.UpdateProfile({
       no: form.value.no,
       title: form.value.title,
       subContent: form.value.subContent,
       content: form.value.content,
-      filePath: newFilePath,
-      oldFilePath: form.value.filePath  
     })
 
     console.log(res)

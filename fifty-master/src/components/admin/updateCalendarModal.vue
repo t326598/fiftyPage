@@ -19,8 +19,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import axios from "@/api/profile"
-import axiosplan from "@/api/plan"
+import axios from "@/api/files"
 
 const props = defineProps<{
   months: any
@@ -31,12 +30,11 @@ const emit = defineEmits(['close', 'updated'])
 const form = ref({
   id: props.months.id,
   month: props.months.month,
-  imageUrl: props.months.imageUrl,
   file: null as File | null,
-  filePath: props.months.filePath
+  filePath: props.months.name
 })
 
-const previewUrl = ref<string | null>(`http://localhost:8080/upload/${props.months.imageUrl}`)
+const previewUrl = ref<string | null>(`http://localhost:8080/upload/${props.months.name}`)
 
 const onImageChange = (e: Event) => {
   const file = (e.target as HTMLInputElement).files?.[0]
@@ -46,29 +44,31 @@ const onImageChange = (e: Event) => {
   }
 }
 
+
 const uploadFile = async (file: File): Promise<string> => {
   const formData = new FormData()
-  formData.append('file', file)
-  const response = await axios.UpdateImage(formData, {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  })
+  formData.append('no', props.months.fileNo)
+  formData.append('data', file)
+  formData.append('oldFilePath', props.months.path)
+  console.log([...formData.entries()]); 
+  const response = await axios.updateFiles( formData)
+  console.log(response.data)
+
+
   return response.data.filePath
 }
 
-const submit = async () => {
+
+
+const submit = async  () => {
   try {
-    let newFilePath = form.value.filePath
+
+let newFilePath = form.value.filePath
     if (form.value.file) {
       newFilePath = await uploadFile(form.value.file)
-      console.log(newFilePath);
     }
 
     console.log("나옴?")
-    const res = await axiosplan.updateBackground({
-      id : form.value.id,
-      imageUrl: newFilePath,
-      oldFilePath: form.value.filePath
-    })
 
     emit('updated')
     emit('close')
