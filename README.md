@@ -27,8 +27,8 @@
   </p>
   
 - **카테고리 별 일정 캘린더**
-- ![2025-06-05_18-21-45_2](https://github.com/user-attachments/assets/9e1d4958-d4b6-45a6-9156-4d9a4c39e0ec) 
-![bandicam 2025-05-31 01-12-50-787](https://github.com/user-attachments/assets/ac35d3c0-71d4-4038-8398-f81d8a4260d4)
+- ![2025-06-05_18-21-45_2](https://github.com/user-attachments/assets/9e1d4958-d4b6-45a6-9156-4d9a4c39e0ec)
+- ![bandicam 2025-05-31 01-12-50-787](https://github.com/user-attachments/assets/ac35d3c0-71d4-4038-8398-f81d8a4260d4)
 
   <p>
 음방, 컴백 등 crt 필드를 가진 이벤트 컬렉션 FullCalendar.js 사용 및 카테고리 별 색상 표시
