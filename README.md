@@ -73,7 +73,8 @@
 
 
 ** Swagger api**
-![image.png](attachment:e3e4e146-4664-4b7e-b257-e57c2e3b7321:image.png)
+![image](https://github.com/user-attachments/assets/c7cee12f-8471-47f5-85dd-326728e93869)
+
 
 서버 문제 발생시 비즈니스로직 확인을 위해 swagger api를 활용해 테스트하며 문제점을 찾아 진행하였습니다.
   
@@ -96,7 +97,8 @@
 
 
 ### :bulb: ⚙ 프로젝트 설계 ERD
-![bandicam 2025-06-05 15-43-24-836.jpg](attachment:8d29180f-3dae-420f-9760-38c9e2b971b1:bandicam_2025-06-05_15-43-24-836.jpg)
+![bandicam 2025-06-05 15-43-24-836](https://github.com/user-attachments/assets/83e51002-ad9b-443d-b3f2-e6722d2646dc)
+
 
 
 ### :bulb: ⚙ 프로젝트 보완 및 아쉬운점
