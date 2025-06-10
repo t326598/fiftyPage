@@ -43,8 +43,9 @@
     @Scheduled 을 사용해 매일 오전 9시마다 피프티로 영상 검색 후 
     필터 처리 후 DB에 탑 10 영상 썸네일, 주소, view, 제목 저장 및 조회
   </p>
-    ![bandicam 2025-05-31 01-24-56-994](https://github.com/user-attachments/assets/8bbc69ef-6b55-4f4a-a578-53a4768fab02)
-    ![bandicam 2025-05-31 01-24-48-185](https://github.com/user-attachments/assets/964ccb71-23f1-4ea9-8e4d-23681b98f517)
+![bandicam 2025-05-31 01-24-48-185](https://github.com/user-attachments/assets/e5666ea9-da88-41b4-bcf9-7bceb1e4cd6b)
+![bandicam 2025-05-31 01-24-56-994](https://github.com/user-attachments/assets/cbab4beb-0e5a-4b76-90a5-c5b143749cc2)
+
 
 <p>Spring에서 제공하는 @Scheduled 기능을 활용하여 매일 오전 9시 마다 Youtube API를 활용해 조회수 탑 10개 영상을 가져오도록 설계했으며 필터처리를 통해 특정 날짜 이후 특정 단어를 제외한 검색기록만 가져오도록 설계하여 잘못된 정보가 들어오지 않도록 구현하였습니다.</p>
 
