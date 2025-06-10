@@ -43,8 +43,9 @@
     @Scheduled 을 사용해 매일 오전 9시마다 피프티로 영상 검색 후 
     필터 처리 후 DB에 탑 10 영상 썸네일, 주소, view, 제목 저장 및 조회
   </p>
-  ![bandicam 2025-05-31 01-24-48-185.jpg](attachment:da6ae4ab-2d40-4e94-9a6b-8c6a852aa2cb:bandicam_2025-05-31_01-24-48-185.jpg)
-![bandicam 2025-05-31 01-24-56-994.jpg](attachment:1717d8fd-9234-40ee-9436-a238249a66ab:bandicam_2025-05-31_01-24-56-994.jpg)
+    ![bandicam 2025-05-31 01-24-56-994](https://github.com/user-attachments/assets/8bbc69ef-6b55-4f4a-a578-53a4768fab02)
+    ![bandicam 2025-05-31 01-24-48-185](https://github.com/user-attachments/assets/964ccb71-23f1-4ea9-8e4d-23681b98f517)
+
 <p>Spring에서 제공하는 @Scheduled 기능을 활용하여 매일 오전 9시 마다 Youtube API를 활용해 조회수 탑 10개 영상을 가져오도록 설계했으며 필터처리를 통해 특정 날짜 이후 특정 단어를 제외한 검색기록만 가져오도록 설계하여 잘못된 정보가 들어오지 않도록 구현하였습니다.</p>
 
 - **DB 데이터 자동 삭제**
@@ -53,7 +54,7 @@
   <p>
     DB에 이미지를 체크하여 DB에는 있지만 경로에 이미지가 없는 경우 DB를 자동으로 삭제하도록 구현하여 불필요한 용량이 차지하지 않도록 설계하였습니다.
   </p>
-  
+
   - **이미지 갤러리**
   - ![2025-06-05_18-21-45_5](https://github.com/user-attachments/assets/0dbe44f9-e9f5-457f-acad-2951ebff93c2)
 ![2025-06-05_18-21-45_6](https://github.com/user-attachments/assets/b8af6da0-5c44-4e52-b681-b595805802b2)
