@@ -25,7 +25,8 @@
   <p>
     로고, 배경 아이콘을 모두 테마별 리소스로 분리
   </p>
-  ![bandicam 2025-05-31 02-01-34-160](https://github.com/user-attachments/assets/6a37aa47-ab01-4c6a-96d0-0fb83d40c262)
+
+![bandicam 2025-05-31 02-01-34-160](https://github.com/user-attachments/assets/72247bc7-d7ef-4bc8-a875-a92c9b9160e9)
 
   <p>하나의 페이지로 구현되는 각 기능들을 독립된 컴포넌트로 분리하여  재사용성과 유지보수성을 높였습니다.
       또한 함수 및 변수의 이름이 역할이 드러나도록 설계해 기능 탐색의 편의성을 향상시키고 TypeScript를 사용하여 잘못된 정보가 들어가지 않도록 설계하였습니다.</p>
