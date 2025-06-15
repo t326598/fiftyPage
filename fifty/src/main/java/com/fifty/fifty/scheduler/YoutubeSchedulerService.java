@@ -15,8 +15,8 @@ public class YoutubeSchedulerService {
     private YoutubeService chartService;
 
 
-@Scheduled(cron = "0 0 9 * * *") // 매일 오전 9시
+@Scheduled(cron = "0 23 1 * * *") // 매일 오전 9시
 public void scheduledYoutubeUpdate() throws IOException, InterruptedException {
-    chartService.fetchTop10YoutubeVideos();
+    chartService.updateYoutubeChart();
 }
 }

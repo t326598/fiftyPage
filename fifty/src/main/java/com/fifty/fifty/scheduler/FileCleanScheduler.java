@@ -14,8 +14,7 @@ public class FileCleanScheduler {
 
 
 
-    // 매일 자정 실행 예시
-    @Scheduled(cron = "0 36 1 * * ?")
+    @Scheduled(cron = "00 00 00 * * ?")
     public void scheduledCleanup() throws Exception {
         filesServiceImpl.cleanupFiles();
     }

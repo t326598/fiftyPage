@@ -65,8 +65,7 @@ const slide = () => {
 
   currentOffset.value += slideSpeed;
 
-  const itemWidth = sliderRef.value.scrollWidth / repeatedVideos.value.length;
-  const totalWidth = itemWidth * videoitems.value.length;
+  const totalWidth = sliderRef.value.scrollWidth / 2; // 원본 한 세트 너비 (반복된 두 세트 중 한 세트 길이)
 
   if (currentOffset.value >= totalWidth) {
     currentOffset.value = 0;
@@ -74,6 +73,7 @@ const slide = () => {
 
   sliderRef.value.style.transform = `translateX(-${currentOffset.value}px)`;
 };
+
 
 const startSliding = () => {
   timer = window.setInterval(slide, 16);
