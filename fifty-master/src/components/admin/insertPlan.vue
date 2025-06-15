@@ -242,7 +242,7 @@ async function submitEvent() {
    
   } else {
    await axios.getInsertPlan(newEvent);
-
+    
   }
   await fetchPlan()
   closeModal()

@@ -36,7 +36,7 @@ public class YoutubeService {
 
     public void updateYoutubeChart() throws IOException, InterruptedException {
         List<YoutubeChartData> videos = fetchTop10YoutubeVideos();
-
+        System.out.println(videos.size());
     for (int i = 0; i < videos.size(); i++) {
         YoutubeChartData video = videos.get(i);
 
@@ -44,15 +44,12 @@ public class YoutubeService {
         String decodedTitle = StringEscapeUtils.unescapeHtml4(video.getTitle());
         video.setTitle(decodedTitle);
 
-        video.setNo(i + 1);
+        video.setNo(i+1);
 
-        YoutubeChartData existing = youtubeMapper.findByVideoId(video.getVideoId());
-        if (existing != null) {
-            youtubeMapper.updateChart(video);
-        } else {
-            video.setPreviousViewCount(0);
-            youtubeMapper.insertChart(video);
-        }
+        System.out.println("이거나옴?");
+   
+        youtubeMapper.updateChart(video);
+  
     }
     }
 

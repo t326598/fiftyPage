@@ -13,5 +13,7 @@ public class Profile {
     private String subContent;
     private String name;
 
+    private String path;
+
     private MultipartFile data;
 }

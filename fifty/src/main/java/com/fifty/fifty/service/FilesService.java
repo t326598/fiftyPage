@@ -8,7 +8,7 @@ import com.fifty.fifty.domain.FilePath;
 
 public interface FilesService {
     
-    public List<FilePath> AllList(Map<String, Object> params) throws Exception;
+    public List<FilePath> AllList() throws Exception;
 
     public int allCount(Map<String, Object> params) throws Exception;
 

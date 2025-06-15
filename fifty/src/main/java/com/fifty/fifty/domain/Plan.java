@@ -13,6 +13,7 @@ public class Plan {
     private Long crt;
     private String title;
     private String content;
+    private Long fileNo;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime startAt;      // 시작 시간 (FullCalendar 대응)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")

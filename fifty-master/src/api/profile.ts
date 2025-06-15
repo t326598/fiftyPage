@@ -11,13 +11,8 @@ function UpdateProfile(data : any){
     return instance.put("/profile", data);
 }
 
-function UpdateImage(data: FormData, config = {}) {
-  return instance.post("/profile", data, config)
-}
 
 
 export default{
   ListProfile,
-  UpdateProfile,
-  UpdateImage,
-};
+  UpdateProfile};

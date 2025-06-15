@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.fifty.fifty.domain.MusicChart;
 import com.fifty.fifty.domain.Notice;
 import com.fifty.fifty.domain.YoutubeChartData;
-import com.fifty.fifty.service.YoutubeSchedulerService;
+import com.fifty.fifty.scheduler.YoutubeSchedulerService;
 import com.fifty.fifty.service.YoutubeService;
 
 @RestController

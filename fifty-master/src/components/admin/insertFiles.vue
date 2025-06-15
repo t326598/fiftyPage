@@ -1,19 +1,17 @@
 <template>
   <div class="upload-container">
     <!-- 선택 박스 -->
-    <div class="field">
-      <label for="crt">멤버버:</label>
-      <select v-model="form.crt" id="crt">
-        <option disabled value="">선택</option>
-         <option value="1">키나</option>
-        <option value="2">샤넬</option>
-        <option value="3">예원</option>
-        <option value="4">하나</option>
-        <option value="5">아테나나</option>
-  
-      </select>
-    </div>
-
+  <div class="button-group">
+    <button
+      v-for="(name, num) in categories"
+      :key="num"
+      type="button"
+      :class="{ active: form.crt.includes(Number(num)) }"
+      @click="toggleMember(Number(num))"
+    >
+      {{ name }}
+    </button>
+  </div>
     <div class="field">
       <label for="true_day">촬영일자:</label>
       <select v-model="form.true_day" id="true_day">
@@ -43,7 +41,7 @@ import { ref } from 'vue'
 import axios  from '../../api/files'
 
 const form = ref({
-  crt: '',
+  crt: [],
   true_day: '',
   image: null
 })
@@ -83,9 +81,40 @@ const removeImage = () => {
   form.value.image = null
   previewUrl.value = null
 }
+const toggleMember = (memberId) => {
+  const index = form.value.crt.indexOf(memberId)
+  if (index === -1) {
+    form.value.crt.push(memberId)
+  } else {
+    form.value.crt.splice(index, 1)
+  }
+}
+
+// 예시 멤버 목록
+const categories = {
+  1: '키나',
+  2: '샤넬',
+  3: '예원',
+  4: '하나',
+  5: '아테나나'
+}
+
 </script>
 
 <style scoped>
+.button-group button {
+  margin: 4px;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  background: #fff;
+  cursor: pointer;
+}
+.button-group button.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
 .upload-container {
   display: flex;
   flex-direction: column;

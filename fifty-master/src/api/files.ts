@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 export interface FileItem {
   no: number;
@@ -27,6 +27,9 @@ function insertFile(formData: any){
 function fetchFiles(params: FileParams) {
   return instance.get("/files",{params})
 }
+function updateFiles(formData: any) {
+  return instance.post("/files/update",formData)
+}
 
 function deleteImage(no : number) {
     return instance.delete(`/files/${no}`);
@@ -37,5 +40,6 @@ function deleteImage(no : number) {
 export default{
   insertFile,
   fetchFiles,
-  deleteImage
+  deleteImage,
+  updateFiles
 };
