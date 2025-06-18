@@ -112,3 +112,4 @@
 - 하루 접속자 today 를 통해 트래픽 계산 필요(오픈 이후)
 - Youtube 탑 10 영상 조회시 Redis 캐시를 활용한 속도 향상 작업 필요
 - **Papago API를 활용한 다국어 번역 기능 추가 예정**
+- Front 카페24, Back Render로 배포예정
